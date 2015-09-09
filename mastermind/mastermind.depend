@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1441802168 source:e:\compsci\cpp\mastermind\main.cpp
+	<iostream>
+	<ctime>
+	<stdlib.h>
+
