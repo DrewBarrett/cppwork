@@ -80,7 +80,11 @@ int main()
         cout << "The computer goes first.\n";
         startComputerTurn(computerIsSmart);
     }else{
-        cout << "You go first.\n";
+        if(computerIsSmart){
+            cout << "You go first against a hard computer.\n";
+        }else{
+            cout << "You go first against an easy computer.\n";
+        }
         startPlayerTurn();
     }
     system("PAUSE");
@@ -88,7 +92,7 @@ int main()
 }
 
 /*
-EASY COMPUTER:
+EASY COMPUTER: PLAYER WIN
 Welcome to Nim
 The pile size starts at: 13
 The computer goes first.
@@ -116,7 +120,39 @@ The remaining pile size is: 1
 You win!
 Press any key to continue . . .
 
-HARD COMPUTER:
+EASY COMPUTER: COMPUTER WIN
+Welcome to Nim
+The pile size starts at: 32
+You go first against an easy computer.
+Enter value between 1 and 16: 16
+You take 16 marbles from the pile.
+The remaining pile size is: 16
+The easy computer takes 2 marbles from the pile.
+The remaining pile size is: 14
+Enter value between 1 and 7: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 13
+The easy computer takes 4 marbles from the pile.
+The remaining pile size is: 9
+Enter value between 1 and 4: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 8
+The easy computer takes 1 marbles from the pile.
+The remaining pile size is: 7
+Enter value between 1 and 3: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 6
+The easy computer takes 3 marbles from the pile.
+The remaining pile size is: 3
+Enter value between 1 and 1: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 2
+The easy computer takes 1 marbles from the pile.
+The remaining pile size is: 1
+The computer wins!
+Press any key to continue . . .
+
+HARD COMPUTER: COMPUTER WINS GOING FIRST
 Welcome to Nim
 The pile size starts at: 76
 The computer goes first.
@@ -154,5 +190,40 @@ The remaining pile size is: 2
 The hard computer takes 1 marbles from the pile.
 The remaining pile size is: 1
 The computer wins!
+Press any key to continue . . .
+
+HARD COMPUTER: PLAYER WINS GOING FIRST
+Welcome to Nim
+The pile size starts at: 88
+You go first against a hard computer.
+Enter value between 1 and 44: 25
+You take 25 marbles from the pile.
+The remaining pile size is: 63
+The hard computer takes 2 marbles from the pile.
+The remaining pile size is: 61
+Enter value between 1 and 30: 30
+You take 30 marbles from the pile.
+The remaining pile size is: 31
+The hard computer takes 12 marbles from the pile.
+The remaining pile size is: 19
+Enter value between 1 and 9: 4
+You take 4 marbles from the pile.
+The remaining pile size is: 15
+The hard computer takes 7 marbles from the pile.
+The remaining pile size is: 8
+Enter value between 1 and 4: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 7
+The hard computer takes 2 marbles from the pile.
+The remaining pile size is: 5
+Enter value between 1 and 2: 2
+You take 2 marbles from the pile.
+The remaining pile size is: 3
+The hard computer takes 1 marbles from the pile.
+The remaining pile size is: 2
+Enter value between 1 and 1: 1
+You take 1 marbles from the pile.
+The remaining pile size is: 1
+You win!
 Press any key to continue . . .
 */

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1441799686 source:e:\compsci\cpp\nim\main.cpp
+1441970720 source:e:\compsci\cpp\nim\main.cpp
 	<iostream>
 	<ctime>
 	<stdlib.h>
