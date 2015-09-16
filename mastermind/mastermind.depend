@@ -1,6 +1,10 @@
 # depslib dependency file v1.0
-1441971626 source:e:\compsci\cpp\mastermind\main.cpp
+1442415784 source:e:\compsci\cpp\mastermind\main.cpp
 	<iostream>
 	<ctime>
 	<stdlib.h>
+	<algorithm>
+	<string>
+	<ctype.h>
+	<vector>
 

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <ctype.h>
+#include <vector>
 
 using namespace std;
 //Drew Barrett
@@ -12,6 +13,48 @@ int pattern[4];
 int guesses = 15;
 string rawInput;
 int patternGuess[4];
+
+int hint(){
+    int correct = 0;
+    int wrongspot = 0;
+    int status[] = { 0, 0, 0, 0 };
+    cout << "You guessed: ";
+    for (int i=0; i < 4; i++){
+        switch(patternGuess[i])
+        {
+            case RED:   cout << "red ";     break;
+            case BLUE:  cout << "blue ";    break;
+            case YELLOW:cout << "yellow ";  break;
+            case GREEN: cout << "green ";   break;
+            case WHITE: cout << "white ";   break;
+            case ORANGE:cout << "orange ";  break;
+        }
+    }
+    cout << endl;
+    for (int i=0; i < 4; i++){
+        if(patternGuess[i] == pattern[i]){
+            correct++;
+            status[i] = 1;
+        }
+    }
+    for (int i=0; i < 4; i++){
+        if(status[i] != 1){
+            for (int k=0; k < 4; k++){
+                if(status[k] == 0){
+                    if(patternGuess[i] == pattern[k]){
+                        wrongspot++;
+                        status[k] = 2;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << correct << " " << wrongspot << endl;
+    for (int i=0; i<4;i++){
+        cout << status[i] << endl;
+    }
+}
 
 int interpretInput(){
     string lowerInput;
@@ -58,7 +101,12 @@ int interpretInput(){
         lowerInput.replace(lowerInput.find("o"), 1, "5");
     }
     cout << lowerInput << endl;//DEBUG
-    if (rawInput == "lol"){
+    if (lowerInput.length() == 4){
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            patternGuess[i] = lowerInput.at(i) - '0';
+        }
+        cout << patternGuess[0] << endl;//DEBUG
         return 0;
     }else{
         return 1;
@@ -80,6 +128,8 @@ int guess(){
         }
     }
     cout << rawInput << endl;//DEBUG
+    hint();
+    return 0;
 }
 
 int main()
