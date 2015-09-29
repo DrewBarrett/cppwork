@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1443528236 source:e:\compsci\cpp\poker\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+

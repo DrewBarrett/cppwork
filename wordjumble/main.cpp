@@ -14,14 +14,19 @@ int score = 0;
 int main()
 {
     enum fields {WORD, HINT, NUM_FIELDS};
-    const int NUM_WORDS = 5;
+    const int NUM_WORDS = 10;
     const string WORDS[NUM_WORDS][NUM_FIELDS] =
     {
         {"wall", "Do you feel you're banging your head against something?"},
         {"glasses", "These might help you see the answer."},
         {"labored", "Going slowly, is it?"},
         {"persistent", "Keep at it."},
-        {"jumble", "It's what the game is all about."}
+        {"jumble", "It's what the game is all about."},
+        {"mumble", "Speak up."},
+        {"fumble", "Don't drop it!"},
+        {"crumbles", "And thats the way the cookie..."},
+        {"rumble", "When your stomach does this you're hungry."},
+        {"humble", "It's what you are until you get the top score in this amazing game."}
     };
 
     cout << "\t\t\tWelcome to Word Jumble!\n\n";
@@ -92,58 +97,106 @@ int main()
     return 0;
 }
 /*
-                    Welcome to Word Jumble!
+                        Welcome to Word Jumble!
 
 Unscramble the letters to make a word.
 Enter 'hint' for a hint.
 Enter 'quit' to quit the game.
 
-The jumble is: ujbelm
-
-Your guess: jumble
-
-That's it!  You guessed it! 6 points awarded!
-Score: 6
-4 words remaining!
-The jumble is: lalw
-
-Your guess: wall
-
-That's it!  You guessed it! 4 points awarded!
-Score: 10
-3 words remaining!
-The jumble is: rtpssietne
-
-Your guess: persistent
-
-That's it!  You guessed it! 10 points awarded!
-Score: 20
-2 words remaining!
-The jumble is: albeord
+The jumble is: mlefub
 
 Your guess: hint
-Going slowly, is it?
+Don't drop it!
 3 points deducted for using hint
-Score: 17
+Score: -3
 
-Your guess: labored
+Your guess: fumble
 
-That's it!  You guessed it! 7 points awarded!
-Score: 24
-1 words remaining!
-The jumble is: gassles
+That's it!  You guessed it! 6 points awarded!
+Score: 3
+9 words remaining!
+The jumble is: mrlube
 
-Your guess: glassess
+Your guess: rumble
+
+That's it!  You guessed it! 6 points awarded!
+Score: 9
+8 words remaining!
+The jumble is: ssagles
+
+Your guess: gklassles
 Sorry, that's not it.
 
 Your guess: glasses
 
 That's it!  You guessed it! 7 points awarded!
-Score: 31
+Score: 16
+7 words remaining!
+The jumble is: wlla
+
+Your guess: wall
+
+That's it!  You guessed it! 4 points awarded!
+Score: 20
+6 words remaining!
+The jumble is: bcuemlsr
+
+Your guess: hint
+And thats the way the cookie...
+4 points deducted for using hint
+Score: 16
+
+Your guess: crumbles
+
+That's it!  You guessed it! 8 points awarded!
+Score: 24
+5 words remaining!
+The jumble is: ulmhbe
+
+Your guess: humble
+
+That's it!  You guessed it! 6 points awarded!
+Score: 30
+4 words remaining!
+The jumble is: redabol
+
+Your guess: hint
+Going slowly, is it?
+3 points deducted for using hint
+Score: 27
+
+Your guess: laboreds
+Sorry, that's not it.
+
+Your guess: labored
+
+That's it!  You guessed it! 7 points awarded!
+Score: 34
+3 words remaining!
+The jumble is: pessentrit
+
+Your guess: persistent
+
+That's it!  You guessed it! 10 points awarded!
+Score: 44
+2 words remaining!
+The jumble is: mlbeju
+
+Your guess: jumble
+
+That's it!  You guessed it! 6 points awarded!
+Score: 50
+1 words remaining!
+The jumble is: bmumle
+
+Your guess: mumble
+
+That's it!  You guessed it! 6 points awarded!
+Score: 56
 0 words remaining!
 
 Thanks for playing.
 
-Process returned 0 (0x0)   execution time : 28.289 s
+Process returned 0 (0x0)   execution time : 94.877 s
 Press any key to continue.
 */
