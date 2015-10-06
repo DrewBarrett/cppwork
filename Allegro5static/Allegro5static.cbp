@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Allegro5static" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Allegro5static" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../../codeblocks/allegro-5.0.10-mingw-4.7.0/allegro-5.0.10-mingw-4.7.0/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_acodec-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_audio-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_color-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_dialog-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_font-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_image-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_memfile-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_physfs-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_primitives-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro_ttf-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-monolith-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\liballegro-5.0.10-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libdumb-0.9.3-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libdumb-0.9.3-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libdumb-0.9.3-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libdumb-0.9.3-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libFLAC-1.2.1-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libFLAC-1.2.1-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libFLAC-1.2.1-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libFLAC-1.2.1-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libfreetype-2.4.8-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libfreetype-2.4.8-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libfreetype-2.4.8-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libfreetype-2.4.8-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libogg-1.2.1-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libogg-1.2.1-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libogg-1.2.1-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libogg-1.2.1-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libopenal-1.14-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libopenal-1.14-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libopenal-1.14-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libopenal-1.14-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbis-1.3.2-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbis-1.3.2-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbis-1.3.2-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbis-1.3.2-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbisfile-1.3.2-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbisfile-1.3.2-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbisfile-1.3.2-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libvorbisfile-1.3.2-static-mt-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libzlib-1.2.5-static-md.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libzlib-1.2.5-static-md-debug.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libzlib-1.2.5-static-mt.a" />
+					<Add library="..\..\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\lib\libzlib-1.2.5-static-mt-debug.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libgdiplus.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libuuid.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libkernel32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libwinmm.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libpsapi.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libopengl32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libglu32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libuser32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libcomdlg32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libgdi32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libshell32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libole32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libadvapi32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libws2_32.a" />
+					<Add library="..\..\codeblocks\mingw\lib\libshlwapi.a" />
+					<Add library="..\..\codeblocks\allegro-5.0.10-mingw-4.7.0\allegro-5.0.10-mingw-4.7.0\bin\allegro-5.0.10-monolith-md-debug.dll" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Allegro5static" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
