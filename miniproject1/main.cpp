@@ -68,35 +68,6 @@ int main(int argc, char **argv)
             al_flip_display();
         }
     }
-   /* al_clear_to_color(al_map_rgb(0,0,0));
-    al_draw_line(100,200,300,400,yellow, 6);
-
-
-    float points[8] = { 0, 0, 400, 100, 50, 200, ScreenWidth, ScreenHeight };
-
-    al_draw_triangle(10, 10, 20, 10, 25, 50, al_map_rgb(255, 0, 0), 1.0);
-    //al_draw_filled_triangle(10, 10, 20, 10, 25, 50, al_map_rgb(255, 0, 0), 1.0);
-
-    al_draw_rounded_rectangle(10, 10, 100, 100, 5, 5, al_map_rgb(0, 255, 0), 3);
-    //al_draw_filled_rounded_rectangle(10, 10, 100, 100, 5, 5, al_map_rgb(0, 255, 0), 3);
-
-    al_draw_rectangle(400, 400, 450, 500, al_map_rgb(255, 98, 100), 9.0);
-    //al_draw_filled_rectangle(400, 400, 450, 500, al_map_rgb(255, 98, 100), 9.0);
-
-    al_draw_circle(ScreenWidth / 2, ScreenHeight / 2, 10, al_map_rgb(255, 255, 0), 3.0);
-    //al_draw_filled_circle(ScreenWidth / 2, ScreenHeight / 2, 10, al_map_rgb(255, 255, 0), 3.0);
-
-    al_draw_ellipse(ScreenWidth / 2, ScreenHeight - 100, 10, 5, al_map_rgb(255, 0, 255), 4.0);
-    //al_draw_filled_ellipse(ScreenWidth / 2, ScreenHeight - 100, 10, 5, al_map_rgb(255, 0, 255), 4.0);
-
-    al_draw_arc(10, ScreenHeight - 100, 10, 0, 4.0, al_map_rgb(255, 0, 0), 2.0);
-
-    al_draw_line(100, 500, 300, 500, electricBlue, 6.0);
-
-    al_draw_pixel(500, 500, electricBlue);
-
-    al_draw_spline(points, electricBlue, 1.0);
-*/
     al_destroy_display(display);
 
     std::cout << "test";
