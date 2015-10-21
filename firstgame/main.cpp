@@ -2,6 +2,7 @@
 #include <string>
 #include <cstring>
 #include <stdio.h>
+#include <cmath>
 #include <allegro5/allegro.h>
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_primitives.h"
@@ -38,11 +39,12 @@ int main(int argc, char **argv)
     bool gameover = false;
     bool roundwin = false;
     bool roundlose = false;
-    const int PADDLESPEED = 4;
+    const int PADDLESPEED = 5;
     int y1 = 10;
     int y2 = 10;
     int won = 0;
     int lost = 0;
+    int recent = 0;
     double x = 2;
     double y = 2;
     double startx = ScreenWidth / 4;
@@ -135,17 +137,27 @@ int main(int argc, char **argv)
                         y1 -= PADDLESPEED;
                 }
                 //second paddle
-                if(y2 + (50 / 2) < starty && y2 + 50 <= ScreenHeight - 2) {
-                    y2 += PADDLESPEED;
+                if(y2 + (50 / 2) < starty && y2 + 50 <= ScreenHeight - PADDLESPEED - 1) {
+                    if(starty - (y2 + (50 / 2)) >= PADDLESPEED) {
+                        y2 += PADDLESPEED;
+                    } else {
+                        y2 += starty - (y2 + (50 / 2));
+                    }
                 }
-                if(y2 + (50 / 2) > starty && y2 >= 2) {
-                    y2 -= PADDLESPEED;
+                if(y2 + (50 / 2) > starty && y2 >= PADDLESPEED - 1) {
+                    if((y2 + (50 / 2)) - starty > PADDLESPEED) {
+                        y2 -= PADDLESPEED;
+                    } else {
+                        y2 -= (y2 + (50 / 2)) - starty;
+                    }
                 }
-                std::cout << x << std::endl;
+                std::cout << x << ", " << y << std::endl;
 
                 al_draw_filled_rectangle(10, y1, 20, y1 + 50, yellow);
                 al_draw_filled_rectangle(ScreenWidth - 10, y2, ScreenWidth - 20, y2 + 50, yellow);
                 if(starty >= ScreenHeight - 5 || starty <= 5) {
+                    //y *= -1.0001;
+                    //y *= -.9999;
                     y *= -1;
                 }
                 if(startx <= 5) {
@@ -162,10 +174,12 @@ int main(int argc, char **argv)
 
                     //win = true;
                 }
-                if (startx <= 20 && startx >= 10 && starty >= y1 && starty <= y1 + 50 ||
-                        startx >= ScreenWidth - 20 && startx <= ScreenWidth - 10 && starty >= y2 && starty <= y2 + 50 ) {
+                if ((startx <= 25 && startx >= 10 && starty >= y1 && starty <= y1 + 50 ||
+                        startx >= ScreenWidth - 25 && startx <= ScreenWidth - 10 && starty >= y2 && starty <= y2 + 50 ) && recent <= 0) {
                     x *= -1;
+                    recent = 15;
                 }
+                recent--;
                 startx += x;
                 starty += y;
                 al_draw_filled_circle(startx, starty, 5, yellow);
@@ -178,7 +192,6 @@ int main(int argc, char **argv)
     }
     al_destroy_display(display);
 
-    std::cout << "test";
     return 0;
 }
 
