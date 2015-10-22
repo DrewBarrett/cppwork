@@ -3,6 +3,7 @@
 #include <cstring>
 #include <stdio.h>
 #include <cmath>
+#include <vector>
 #include <allegro5/allegro.h>
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_primitives.h"
@@ -16,6 +17,11 @@ int init();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
+ALLEGRO_MOUSE_STATE state;
+int row = 0;
+int column = 0;
+
+int incrementcol();
 
 int main(int argc, char **argv)
 {
@@ -23,8 +29,8 @@ int main(int argc, char **argv)
     double const CIRCLE_RADIUS = 15;
     double const CIRCLE_Y = 40;
     ALLEGRO_COLOR colors[10][4] = { };
-    for(int i=0; i < 10; i++){
-        for(int j = 0; j< 4;j++){
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < 4; j++) {
             colors[i][j] = al_color_name("gray");
         }
     }
@@ -42,6 +48,8 @@ int main(int argc, char **argv)
     bool title = true;
     bool redraw = true;
     bool mouse = false;
+    int circlepos[] = {50 - 20, 100 - 20, 150 - 20, 200 - 20, 250 - 20, 300 - 20};
+    enum {red, blue, yellow, green, white, orange};
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -55,7 +63,12 @@ int main(int argc, char **argv)
             title = false;
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            mouse = true;
+            if(title){
+                title = false;
+            }else{
+                mouse = true;
+                al_get_mouse_state(&state);
+            }
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
@@ -83,19 +96,46 @@ int main(int argc, char **argv)
                              "Created by Drew Barrett");
             } else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                if(mouse){
-                    colors[0][0] = al_color_name("white");
+                if(mouse) {
+                    std::cout << state.x << ", " << state.y << std::endl;
+                    if(state.y >= CIRCLE_Y - CIRCLE_RADIUS && state.y <= CIRCLE_Y + CIRCLE_RADIUS) {
+                        if(state.x >= circlepos[red] - CIRCLE_RADIUS && state.x <= circlepos[red] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("red");
+                            incrementcol();
+                        }
+                        if(state.x >= circlepos[blue] - CIRCLE_RADIUS && state.x <= circlepos[blue] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("blue");
+                            incrementcol();
+                        }
+                        if(state.x >= circlepos[yellow] - CIRCLE_RADIUS && state.x <= circlepos[yellow] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("yellow");
+                            incrementcol();
+                        }
+                        if(state.x >= circlepos[green] - CIRCLE_RADIUS && state.x <= circlepos[green] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("green");
+                            incrementcol();
+                        }
+                        if(state.x >= circlepos[white] - CIRCLE_RADIUS && state.x <= circlepos[white] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("white");
+                            incrementcol();
+                        }
+                        if(state.x >= circlepos[orange] - CIRCLE_RADIUS && state.x <= circlepos[orange] + CIRCLE_RADIUS) {
+                            colors[row][column] = al_color_name("orange");
+                            incrementcol();
+                        }
+                    }
+                    //colors[0][0] = al_color_name("white");
                     mouse = false;
                 }
-                al_draw_filled_circle(50-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("red"));
-                al_draw_filled_circle(100-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("blue"));
-                al_draw_filled_circle(150-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("yellow"));
-                al_draw_filled_circle(200-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("green"));
-                al_draw_filled_circle(250-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("white"));
-                al_draw_filled_circle(300-20,CIRCLE_Y,CIRCLE_RADIUS,al_color_name("orange"));
-                for(int j = 0; j < 10; j++){
-                    for(int i = 0; i < 4; i++){
-                        al_draw_filled_circle(400+i*40,CIRCLE_Y+j*40,CIRCLE_RADIUS,colors[j][i]);
+                al_draw_filled_circle(circlepos[red], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("red"));
+                al_draw_filled_circle(circlepos[blue], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("blue"));
+                al_draw_filled_circle(circlepos[yellow], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("yellow"));
+                al_draw_filled_circle(circlepos[green], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("green"));
+                al_draw_filled_circle(circlepos[white], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("white"));
+                al_draw_filled_circle(circlepos[orange], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("orange"));
+                for(int j = 0; j < 10; j++) {
+                    for(int i = 0; i < 4; i++) {
+                        al_draw_filled_circle(400 + i * 40, CIRCLE_Y + j * 40, CIRCLE_RADIUS, colors[j][i]);
                     }
                 }
             }
@@ -129,4 +169,13 @@ int init()
     al_init_ttf_addon();
     al_install_mouse();
     al_install_keyboard();
+}
+
+int incrementcol()
+{
+    column++;
+    if(column == 4) {
+        column = 0;
+        row++;
+    }
 }
