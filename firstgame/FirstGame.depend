@@ -1,7 +1,10 @@
 # depslib dependency file v1.0
-1445352692 source:e:\compsci\cpp\firstgame\main.cpp
+1445461628 source:e:\compsci\cpp\firstgame\main.cpp
 	<iostream>
+	<string>
+	<cstring>
 	<stdio.h>
+	<cmath>
 	<allegro5/allegro.h>
 	"allegro5/allegro_image.h"
 	"allegro5/allegro_primitives.h"
