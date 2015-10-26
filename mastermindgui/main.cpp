@@ -11,6 +11,7 @@
 #include "allegro5/allegro_ttf.h"
 #include <allegro5/allegro_color.h>
 //Dynamic Link
+//Drew Barrett
 #define ScreenWidth 640
 #define ScreenHeight 480
 int init();
