@@ -19,6 +19,10 @@ ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 bool click = false;
 ALLEGRO_MOUSE_STATE state;
+int generateFruit();
+
+std::vector<double> fruitx;
+std::vector<double> fruity;
 
 int main(int argc, char **argv)
 {
@@ -89,24 +93,18 @@ int main(int argc, char **argv)
                     al_get_mouse_state(&state);
                     tracerx.push_back(state.x);
                     tracery.push_back(state.y);
-                    if tracerx.size() > 8;
-                    for(int i = 0; i < tracerx.size(); i++){
-                        al_draw_circle(tracerx[i],tracery[i],1,al_color_name("black"),1);
+                    if (tracerx.size() > 8){
+                        tracerx.erase(tracerx.begin());
+                        tracery.erase(tracery.begin());
                     }
-                    al_draw_circle(state.x,state.y,1,al_color_name("black"),1);
                     float tracerfloat[8];
                     for (int i=0; i<8; i+=2){
                         tracerfloat[i] = tracerx[i];
                         tracerfloat[i+1] = tracery[i];
                     }
-                    al_draw_spline(tracerfloat,al_color_name("black"),6);
-                    /*if(tracer.size() >= 7){
-                        for (int i=0; i<tracer.size(); i++){
-                            tracerfloat[i] = tracer[i];
-                        }
-                        al_draw_spline(tracerfloat,al_color_name("black"),6);
-                    }*/
+                    al_draw_spline(tracerfloat,al_color_name("white"),2);
                 }
+                al_draw_filled_circle(5,5,5,al_color_name("white"));
             }
             al_flip_display();
             redraw = false;
@@ -115,6 +113,10 @@ int main(int argc, char **argv)
     al_destroy_display(display);
 
     return 0;
+}
+
+int generateFruit(){
+
 }
 
 int init()
