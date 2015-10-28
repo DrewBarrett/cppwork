@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <vector>
+#include <ctime>
 #include <allegro5/allegro.h>
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_primitives.h"
@@ -20,7 +21,7 @@ ALLEGRO_TIMER *timer;
 bool click = false;
 ALLEGRO_MOUSE_STATE state;
 int generateFruit();
-
+int lastFruit = 0;
 std::vector<double> fruitx;
 std::vector<double> fruity;
 
@@ -36,7 +37,7 @@ int main(int argc, char **argv)
     }
     queue = al_create_event_queue();
     ALLEGRO_BITMAP *bg = al_load_bitmap("bg.jpg");
-
+    ALLEGRO_BITMAP *apple = al_load_bitmap("apple.png");
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
     timer = al_create_timer(1.0 / 60);
@@ -46,6 +47,7 @@ int main(int argc, char **argv)
     bool redraw = true;
     std::vector<double> tracerx;
     std::vector<double> tracery;
+    srand(time(0));
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -104,7 +106,16 @@ int main(int argc, char **argv)
                     }
                     al_draw_spline(tracerfloat,al_color_name("white"),2);
                 }
-                al_draw_filled_circle(5,5,5,al_color_name("white"));
+                generateFruit();
+                for(int i = 0; i<fruitx.size(); i++){
+                    fruity[i]--;
+                    if(fruity[i] < 10){
+                        fruity.erase(fruity.begin()+i);
+                        fruitx.erase(fruitx.begin()+i);
+                    }
+                    al_draw_filled_circle(fruitx[i],fruity[i],20,al_color_name("white"));
+                    al_draw_scaled_bitmap(apple,0,0,3172,2709,fruitx[i],fruity[i],3172/50,2709/50,0);
+                }
             }
             al_flip_display();
             redraw = false;
@@ -116,7 +127,12 @@ int main(int argc, char **argv)
 }
 
 int generateFruit(){
-
+    if(fruitx.size() < 10 && lastFruit < 0){
+        fruitx.push_back(rand()%ScreenWidth);
+        fruity.push_back(ScreenHeight + 10);
+        lastFruit = 40;
+    }
+    lastFruit--;
 }
 
 int init()
