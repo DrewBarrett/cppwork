@@ -24,7 +24,7 @@ int generateFruit();
 int lastFruit = 0;
 std::vector<double> fruitx;
 std::vector<double> fruity;
-
+int points = 0;
 int main(int argc, char **argv)
 {
 	init();
@@ -128,6 +128,7 @@ int main(int argc, char **argv)
 						al_draw_spline(tracerfloat, al_color_name("white"), 2);
 					}
 				}
+				al_draw_textf(font, white, 0, 0, ALLEGRO_ALIGN_LEFT, "Score: %d", points);
 			}
 			al_flip_display();
 			redraw = false;
