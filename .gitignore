@@ -1,7 +1,9 @@
 *.zip
 *.depend
 *.layout
-
+.project
+.cproject
+.settings/
 .metadata/
 
 ## Ignore Visual Studio temporary files, build results, and

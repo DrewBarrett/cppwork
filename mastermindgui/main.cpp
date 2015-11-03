@@ -145,18 +145,45 @@ int main(int argc, char **argv)
 							incrementcol();
 						}
 					}
+					if(state.y <= CIRCLE_Y + 100 && state.y >= CIRCLE_Y + 50 && column > 0){
+                        column--;
+                        colors[row][column] = al_color_name("gray");
+                        patternGuess.pop_back();
+					}
 					//colors[0][0] = al_color_name("white");
 					mouse = false;
 				}
 				if (won) {
-					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 50, 0, "You win!");
+					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 100, 0, "You win!");
 				}
 				if (lost) {
-					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 50, 0, "You lose!");
+					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 100, 0, "You lose!");
 				}
 				if (won || lost) {
-					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 100, 0, "Press ESC to quit...");
+					al_draw_text(font, al_color_name("white"), circlepos[red], CIRCLE_Y + 150, 0, "Press ESC to quit...");
 				}
+				int thickness = 1;
+				ALLEGRO_COLOR btnbackcolor = al_color_name("gray");
+				ALLEGRO_COLOR btnCheckColor = al_color_name("gray");
+				if(column > 0){
+                    btnbackcolor = al_color_name("white");
+				}
+				if(column > 4){
+                    btnCheckColor = al_color_name("white");
+				}
+				al_draw_text(font, btnbackcolor, circlepos[red] + 10, CIRCLE_Y + 60,0,"Back");
+				al_draw_text(font, btnCheckColor, circlepos[green] + 10, CIRCLE_Y + 60,0,"Check");
+				al_get_mouse_state(&state);
+				if(state.x >= circlepos[red] && state.x <= circlepos[yellow] && state.y >= CIRCLE_Y+50 && state.y<= CIRCLE_Y+100){
+                    thickness = 2;
+				}
+				al_draw_rectangle(circlepos[red], CIRCLE_Y+50, circlepos[yellow], CIRCLE_Y + 100, btnbackcolor, thickness);
+				if(state.x >= circlepos[green] && state.x <= circlepos[orange] && state.y >= CIRCLE_Y+50 && state.y<= CIRCLE_Y+100){
+                    thickness = 2;
+				}else{
+                    thickness = 1;
+				}
+				al_draw_rectangle(circlepos[green], CIRCLE_Y+50, circlepos[orange], CIRCLE_Y + 100, btnCheckColor, thickness);
 				al_draw_filled_circle(circlepos[red], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("red"));
 				al_draw_filled_circle(circlepos[blue], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("blue"));
 				al_draw_filled_circle(circlepos[yellow], CIRCLE_Y, CIRCLE_RADIUS, al_color_name("yellow"));
