@@ -28,7 +28,6 @@ std::vector<int> patternGuess;
 bool won = false;
 bool lost = false;
 
-int incrementcol();
 int hint();
 
 int main(int argc, char **argv)
@@ -113,42 +112,46 @@ int main(int argc, char **argv)
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 				if (mouse && !(won || lost)) {
 					std::cout << state.x << ", " << state.y << std::endl;
-					if (state.y >= CIRCLE_Y - CIRCLE_RADIUS && state.y <= CIRCLE_Y + CIRCLE_RADIUS) {
+					if (state.y >= CIRCLE_Y - CIRCLE_RADIUS && state.y <= CIRCLE_Y + CIRCLE_RADIUS && column < 4) {
 						if (state.x >= circlepos[red] - CIRCLE_RADIUS && state.x <= circlepos[red] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("red");
 							patternGuess.push_back(red);
-							incrementcol();
+							column++;
 						}
 						if (state.x >= circlepos[blue] - CIRCLE_RADIUS && state.x <= circlepos[blue] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("blue");
 							patternGuess.push_back(blue);
-							incrementcol();
+							column++;
 						}
 						if (state.x >= circlepos[yellow] - CIRCLE_RADIUS && state.x <= circlepos[yellow] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("yellow");
 							patternGuess.push_back(yellow);
-							incrementcol();
+							column++;
 						}
 						if (state.x >= circlepos[green] - CIRCLE_RADIUS && state.x <= circlepos[green] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("green");
 							patternGuess.push_back(green);
-							incrementcol();
+							column++;
 						}
 						if (state.x >= circlepos[white] - CIRCLE_RADIUS && state.x <= circlepos[white] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("white");
 							patternGuess.push_back(white);
-							incrementcol();
+							column++;
 						}
 						if (state.x >= circlepos[orange] - CIRCLE_RADIUS && state.x <= circlepos[orange] + CIRCLE_RADIUS) {
 							colors[row][column] = al_color_name("orange");
 							patternGuess.push_back(orange);
-							incrementcol();
+							column++;
 						}
 					}
 					if(state.y <= CIRCLE_Y + 100 && state.y >= CIRCLE_Y + 50 && column > 0){
-                        column--;
-                        colors[row][column] = al_color_name("gray");
-                        patternGuess.pop_back();
+                        if(state.x >= circlepos[red] && state.x <= circlepos[yellow]){
+                            column--;
+                            colors[row][column] = al_color_name("gray");
+                            patternGuess.pop_back();
+                        }
+                        if(state.x >= circlepos[green] && state.x <= circlepos[orange] && colummn > 3)
+
 					}
 					//colors[0][0] = al_color_name("white");
 					mouse = false;
@@ -168,7 +171,7 @@ int main(int argc, char **argv)
 				if(column > 0){
                     btnbackcolor = al_color_name("white");
 				}
-				if(column > 4){
+				if(column > 3){
                     btnCheckColor = al_color_name("white");
 				}
 				al_draw_text(font, btnbackcolor, circlepos[red] + 10, CIRCLE_Y + 60,0,"Back");
@@ -231,15 +234,6 @@ int init()
 	al_install_keyboard();
 }
 
-int incrementcol()
-{
-	column++;
-	if (column == 4) {
-		hint();
-		column = 0;
-	}
-	return 0;
-}
 
 int hint() {
 	int correct = 0;
