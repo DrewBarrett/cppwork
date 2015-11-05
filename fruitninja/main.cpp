@@ -18,6 +18,7 @@ int init();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
+ALLEGRO_MOUSE_CURSOR *custom_cursor;
 bool click = false;
 ALLEGRO_MOUSE_STATE state;
 int generateFruit();
@@ -28,8 +29,9 @@ int points = 0;
 int main(int argc, char **argv)
 {
 	init();
-	ALLEGRO_COLOR white = al_map_rgb(255, 255, 255);
-	ALLEGRO_COLOR yellow = al_map_rgb(255, 255, 0);
+	ALLEGRO_BITMAP *mousebmp = al_load_bitmap("mouse.png");
+	custom_cursor = al_create_mouse_cursor(mousebmp,0,0);
+	al_set_mouse_cursor(display,custom_cursor);
 	ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
 	if (!font) {
 		fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -84,16 +86,16 @@ int main(int argc, char **argv)
 			al_set_target_bitmap(al_get_backbuffer(display));
 			if (title) {
 				al_clear_to_color(al_map_rgb(0, 0, 0));
-				al_draw_text(font, white, ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Fruit Ninja!");
-				al_draw_text(font, white, ScreenWidth / 2, 50, ALLEGRO_ALIGN_CENTRE, "...");
-				al_draw_text(font, white, ScreenWidth / 2, 100, ALLEGRO_ALIGN_CENTRE, "...");
-				al_draw_text(font, white, ScreenWidth / 2, 150, ALLEGRO_ALIGN_CENTRE,
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Fruit Ninja!");
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 50, ALLEGRO_ALIGN_CENTRE, "...");
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 100, ALLEGRO_ALIGN_CENTRE, "...");
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 150, ALLEGRO_ALIGN_CENTRE,
 					"...");
-				al_draw_text(font, white, ScreenWidth / 2, 200, ALLEGRO_ALIGN_CENTRE,
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 200, ALLEGRO_ALIGN_CENTRE,
 					"...");
-				al_draw_text(font, white, ScreenWidth / 2, 250, ALLEGRO_ALIGN_CENTRE,
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 250, ALLEGRO_ALIGN_CENTRE,
 					"Press any key to continue or ESC to exit...");
-				al_draw_text(font, white, ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
+				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
 			}
 			else {
@@ -128,7 +130,7 @@ int main(int argc, char **argv)
 						al_draw_spline(tracerfloat, al_color_name("white"), 2);
 					}
 				}
-				al_draw_textf(font, white, 0, 0, ALLEGRO_ALIGN_LEFT, "Score: %d", points);
+				al_draw_textf(font, al_color_name("white"), 0, 0, ALLEGRO_ALIGN_LEFT, "Score: %d", points);
 			}
 			al_flip_display();
 			redraw = false;
