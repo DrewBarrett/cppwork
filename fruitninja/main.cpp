@@ -26,6 +26,7 @@ int lastFruit = 0;
 std::vector<double> fruitx;
 std::vector<double> fruity;
 int points = 0;
+int lives = 3;
 int main(int argc, char **argv)
 {
 	init();
@@ -107,10 +108,11 @@ int main(int argc, char **argv)
 					if (fruity[i] < 10) {
 						fruity.erase(fruity.begin() + i);
 						fruitx.erase(fruitx.begin() + i);
+						lives--;
 					}
 					int const DWIDTH = 3172 / 50;
 					int const DHEIGHT = 2709 / 50;
-					al_draw_filled_circle(fruitx[i], fruity[i], 20, al_color_name("white"));
+					//al_draw_filled_circle(fruitx[i], fruity[i], 20, al_color_name("white"));
 					al_draw_scaled_bitmap(apple, 0, 0, 3172, 2709, fruitx[i] - DWIDTH / 2, fruity[i] - DHEIGHT / 2, DWIDTH, DHEIGHT, 0);
 				}
 				if (click) {
@@ -131,6 +133,7 @@ int main(int argc, char **argv)
 					}
 				}
 				al_draw_textf(font, al_color_name("white"), 0, 0, ALLEGRO_ALIGN_LEFT, "Score: %d", points);
+				al_draw_textf(font, al_color_name("white"), ScreenWidth, 0, ALLEGRO_ALIGN_RIGHT, "Lives: %d", lives);
 			}
 			al_flip_display();
 			redraw = false;
