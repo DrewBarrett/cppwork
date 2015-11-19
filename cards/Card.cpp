@@ -38,6 +38,10 @@ int Card::flip()
 {
     flipped = !flipped;
 }
+bool Card::isFlipped()
+{
+    return flipped;
+}
 ALLEGRO_BITMAP *Card::getImg()
 {
     if(flipped){

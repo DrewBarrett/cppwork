@@ -22,6 +22,7 @@ class Card
               string getRank();
               int getValue();
               int flip();
+              bool isFlipped();
               string toString();
               ALLEGRO_BITMAP *getImg();
               string getFileDir();

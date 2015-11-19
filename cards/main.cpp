@@ -27,6 +27,7 @@ int cardx = 71;
 int cardy = 96;
 vector<Card> table[7];
 vector<Card> foundation[4];
+vector<Card> hand;
 int main()
 {
     init();
@@ -70,6 +71,12 @@ int main()
         if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
         }
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
+
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
+
+        }
         if (redraw && al_is_event_queue_empty(queue)) {
             al_get_mouse_state(&state);
             al_set_target_bitmap(al_get_backbuffer(display));
@@ -87,10 +94,27 @@ int main()
                 if(table[i].size()==0){
                     al_draw_rectangle(x1,y1,x2,y2,al_color_name("white"),1);
                 }
+                if(state.y >= MAINPILEY && state.y <= y2){
+                    //al_draw_rectangle(x1,y1,x2,y2,al_color_name("white"),1);
+                }
                 for(int k=0; k<table[i].size(); k++){
                     al_draw_bitmap(table[i][k].getImg(),x1,y1 + k*20,0);
                 }
 
+            }
+            for(int i=0; i<7; i++){
+                int x1 = i*(cardx+20)+xOffset;
+                int y1 = MAINPILEY;
+                int x2 = x1 + cardx+1;
+                int y2 = y1 + cardy+1;
+                for(int k=0; k<table[i].size(); k++){
+                    if (table[i][k].isFlipped()){
+                        if((state.y >= y1 + k*20 && state.y <= y2+(table[i].size()-1)*20)
+                           &&(state.x >= x1 && state.x <= x2)){
+                            al_draw_rectangle(x1,y1+k*20,x2,y2+k*20,al_color_name("white"),1);
+                        }
+                    }
+                }
             }
             for (int i=0; i<4; i++){
                 int x1 = i*(cardx+20)+xOffset+250;
