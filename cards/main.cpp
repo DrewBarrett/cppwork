@@ -10,19 +10,30 @@
 using namespace std;
 
 int init();
+int setup(Deck *);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
+ALLEGRO_MOUSE_STATE state;
 
+
+
+CONST INT MAINPILEY = 200;
+CONST INT FOUNDATIONY = 50;
+
+int xOffset = 10;
+int cardx = 71;
+int cardy = 96;
+vector<Card> table[7];
+vector<Card> foundation[4];
 int main()
 {
     init();
     Deck game;
-    int x = 10, y = 10;
-    int bx = 0;
     ALLEGRO_BITMAP *bmp = al_create_bitmap(1280, 640);
     Card a('c', "Ace", 14, "c1.bmp");
+
     //while (!key[KEY_ESC])
 
         //Lets view the deck first in order:
@@ -43,6 +54,7 @@ int main()
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_start_timer(timer);
 	bool redraw = true;
+	setup(&game);
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -53,23 +65,42 @@ int main()
         if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 break;
-            if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
-                bx+= 20;
-            if (event.keyboard.keycode == ALLEGRO_KEY_LEFT){
-                bx-= 20;
-            }
-            game.deal();
+            //game.deal();
         }
         if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
         }
         if (redraw && al_is_event_queue_empty(queue)) {
+            al_get_mouse_state(&state);
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
             //al_draw_bitmap(bmp, bx, 0, 0);
             Card c;
-            for (int i = 0; i<game.size() * 2; i+=2){
-                al_draw_bitmap(c.getImg(),i,i,0);
+            for (int i = 0; i<10; i+=2){
+                al_draw_bitmap(c.getImg(),i+10,i+10,0);
+            }
+            for (int i=0; i<7; i++){
+                int x1 = i*(cardx+20)+xOffset;
+                int y1 = MAINPILEY;
+                int x2 = x1 + cardx;
+                int y2 = y1 + cardy;
+                if(table[i].size()==0){
+                    al_draw_rectangle(x1,y1,x2,y2,al_color_name("white"),1);
+                }
+                for(int k=0; k<table[i].size(); k++){
+                    al_draw_bitmap(table[i][k].getImg(),x1,y1 + k*20,0);
+                }
+
+            }
+            for (int i=0; i<4; i++){
+                int x1 = i*(cardx+20)+xOffset+250;
+                int y1 = FOUNDATIONY;
+                int x2 = x1 + cardx;
+                int y2 = y1 + cardy;
+                al_draw_rectangle(x1,y1,x2,y2,al_color_name("white"),1);
+                for(int k=0; k<foundation[i].size(); k++){
+                    al_draw_bitmap(foundation[i][k].getImg(),x1,y1 + k*20,0);
+                }
             }
             //game.deal();
             //al_draw_bitmap(c.getImg(),30,30,0);
@@ -82,6 +113,18 @@ int main()
     return 0;
 }
 
+int setup(Deck *d){
+    for(int k = 0; k < 7; k++){
+        for(int i = 6; i>=k; i--){
+            table[i].push_back(d->deal());
+        }
+    }
+    for(int i = 0; i<7;i++){
+        table[i].back().flip();
+    }
+    return 0;
+}
+
 int init()
 {
     /* add other initializations here */
@@ -89,7 +132,7 @@ int init()
         fprintf(stderr, "failed to initialize allegro!\n");
         return -1;
     }
-    display = al_create_display(640, 480);
+    display = al_create_display(1024, 768);
     if (!display) {
         fprintf(stderr, "failed to create display!\n");
         return -1;

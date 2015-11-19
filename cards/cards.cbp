@@ -37,7 +37,6 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Card.cpp" />
-		<Unit filename="Cards_with_Allegro_private.h" />
 		<Unit filename="Deck.cpp" />
 		<Unit filename="Hand.cpp" />
 		<Unit filename="b1fv.bmp" />

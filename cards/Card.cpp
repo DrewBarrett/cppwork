@@ -16,6 +16,8 @@ Card::Card(char suit, string rank, int value, string imgFile)
     myValue = value;
     myBitmapDir = imgFile;
     img = al_load_bitmap(imgFile.c_str());
+    backimg = al_load_bitmap("b1fv.bmp");
+    flipped = false;
 }
 
 char Card::getSuit()
@@ -32,9 +34,17 @@ int Card::getValue()
 {
     return myValue;
 }
+int Card::flip()
+{
+    flipped = !flipped;
+}
 ALLEGRO_BITMAP *Card::getImg()
 {
-       return img;
+    if(flipped){
+        return img;
+    }else{
+        return backimg;
+    }
 }
 string Card::getFileDir()
 {

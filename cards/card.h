@@ -21,16 +21,19 @@ class Card
               char getSuit();
               string getRank();
               int getValue();
+              int flip();
               string toString();
               ALLEGRO_BITMAP *getImg();
               string getFileDir();
 
       private:
               char mySuit;
+              bool flipped;
               string myRank;
               int myValue;
               string myBitmapDir;
               ALLEGRO_BITMAP *img;
+              ALLEGRO_BITMAP *backimg;
 
 };
 #endif
