@@ -40,6 +40,8 @@ Card Deck::deal()  //deals 1 card at a time
 	     myDeck.pop_back();
 	     return c;
 	 }
+	 Card c;
+	 return c;
  }
  
 int Deck::size()

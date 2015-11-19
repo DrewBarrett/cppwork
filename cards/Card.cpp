@@ -7,7 +7,7 @@ Card::Card()
      myRank = " ";
      myValue = 0;
      img = al_load_bitmap("b1fv.bmp");
-
+	 backimg = al_load_bitmap("b1fv.bmp");
 }
 Card::Card(char suit, string rank, int value, string imgFile)
 {
@@ -37,6 +37,7 @@ int Card::getValue()
 int Card::flip()
 {
     flipped = !flipped;
+	return 0;
 }
 bool Card::isFlipped()
 {
