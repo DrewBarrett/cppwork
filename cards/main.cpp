@@ -58,6 +58,7 @@ int main()
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_start_timer(timer);
 	bool redraw = true;
+	Card c;
 	setup(&game);
 	while (1) {
 		ALLEGRO_EVENT event;
@@ -85,7 +86,6 @@ int main()
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 			//al_draw_bitmap(bmp, bx, 0, 0);
-			Card c;
 			for (int i = 0; i < 10; i += 2) {
 				al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
 			}
