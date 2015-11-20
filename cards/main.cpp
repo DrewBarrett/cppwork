@@ -5,7 +5,7 @@
 #include <cmath>
 #include <vector>
 #include <ctime>
-#include "hand.h"
+//#include "hand.h"
 #include "deck.h"
 using namespace std;
 

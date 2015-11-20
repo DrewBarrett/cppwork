@@ -7,7 +7,7 @@ Card::Card()
      myRank = " ";
      myValue = 0;
      img = al_load_bitmap("b1fv.bmp");
-	 backimg = al_load_bitmap("b1fv.bmp");
+	 backimg = img;
 }
 Card::Card(char suit, string rank, int value, string imgFile)
 {
