@@ -11,7 +11,7 @@ using namespace std;
 
 int init();
 int setup(Deck *);
-int transfer(int, int);
+int transferToHand(int, int);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -115,7 +115,7 @@ int main()
 						if ((state.y >= y1 + k * 20 && state.y <= y2 + (table[i].size() - 1) * 20)
 							&& (state.x >= x1 && state.x <= x2)) {
 							al_draw_rectangle(x1, y1 + k * 20, x2, y2 + k * 20, al_color_name("cyan"), 1);
-							transfer(i, k);
+							transferToHand(i, k);
 							break;
 						}
 					}
@@ -131,6 +131,13 @@ int main()
 					al_draw_bitmap(foundation[i][k].getImg(), x1, y1 + k * 20, 0);
 				}
 			}
+			for (int i = 0; i < hand.size(); i++) {
+				int x1 = state.x - (cardx/2);
+				int y1 = state.y;
+				int x2 = x1 + cardx;
+				int y2 = y1 + cardy;
+				al_draw_bitmap(hand[i].getImg(), x1, y1 + i * 20, 0);
+			}
 			//game.deal();
 			//al_draw_bitmap(c.getImg(),30,30,0);
 			al_flip_display();
@@ -142,8 +149,9 @@ int main()
 	return 0;
 }
 
-int transfer(int pile, int start) {
+int transferToHand(int pile, int start) {
 	if (clicked && hand.size()==0) {
+		hand.push_back(table[pile][start]);
 		table[pile].pop_back();
 	}
 	return 0;
