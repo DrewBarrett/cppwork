@@ -11,7 +11,8 @@ using namespace std;
 
 int init();
 int setup(Deck *);
-int transferToHand(int, int);
+int transferToHand(vector<Card> *, int);
+int transferToPile();
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -30,6 +31,8 @@ int cardy = 96;
 vector<Card> table[7];
 vector<Card> foundation[4];
 vector<Card> hand;
+vector<Card> *source;
+vector<Card> *hover;
 int main()
 {
 	init();
@@ -80,8 +83,10 @@ int main()
 		}
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			clicked = false;
+			transferToPile();
 		}
 		if (redraw && al_is_event_queue_empty(queue)) {
+			hover = nullptr;
 			al_get_mouse_state(&state);
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -110,12 +115,13 @@ int main()
 				int y1 = MAINPILEY;
 				int x2 = x1 + cardx + 1;
 				int y2 = y1 + cardy + 1;
-				for (int k = 0; k < table[i].size(); k++) {
+				for (int k = table[i].size()-1; k >= 0; k--) {
 					if (table[i][k].isFlipped()) {
 						if ((state.y >= y1 + k * 20 && state.y <= y2 + (table[i].size() - 1) * 20)
 							&& (state.x >= x1 && state.x <= x2)) {
-							al_draw_rectangle(x1, y1 + k * 20, x2, y2 + k * 20, al_color_name("cyan"), 1);
-							transferToHand(i, k);
+							al_draw_rectangle(x1, y1 + k * 20, x2, y2 + (table[i].size() - 1) * 20, al_color_name("cyan"), 1);
+							hover = &table[i];
+							transferToHand(&table[i], k);
 							break;
 						}
 					}
@@ -124,11 +130,28 @@ int main()
 			for (int i = 0; i < 4; i++) {
 				int x1 = i*(cardx + 20) + xOffset + 250;
 				int y1 = FOUNDATIONY;
-				int x2 = x1 + cardx;
-				int y2 = y1 + cardy;
-				al_draw_rectangle(x1, y1, x2, y2, al_color_name("white"), 1);
-				for (int k = 0; k < foundation[i].size(); k++) {
+				int x2 = x1 + cardx + 1;
+				int y2 = y1 + cardy + 1;
+				if (foundation[i].size() == 0) {
+					al_draw_rectangle(x1, y1, x2, y2, al_color_name("white"), 1);
+				}
+				else {
+					al_draw_bitmap(foundation[i].back().getImg(), x1, y1, 0);
+					if ((state.y >= y1 && state.y <= y2 + (foundation[i].size() - 1) * 20)
+						&& (state.x >= x1 && state.x <= x2)) {
+						al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
+						hover = &foundation[i];
+						transferToHand(&foundation[i], foundation[i].size() - 1);
+					}
+				}
+				/*for (int k = 0; k < foundation[i].size(); k++) {
 					al_draw_bitmap(foundation[i][k].getImg(), x1, y1 + k * 20, 0);
+				}*/
+
+				if ((state.y >= y1&& state.y <= y2)
+					&& (state.x >= x1 && state.x <= x2)) {
+					al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
+					hover = &foundation[i];
 				}
 			}
 			for (int i = 0; i < hand.size(); i++) {
@@ -149,10 +172,37 @@ int main()
 	return 0;
 }
 
-int transferToHand(int pile, int start) {
+int transferToHand(vector<Card> *pile, int start) {
 	if (clicked && hand.size()==0) {
-		hand.push_back(table[pile][start]);
-		table[pile].pop_back();
+		int size = pile->size() - start;
+		for (int i = start; i < pile->size(); i++) {
+			hand.push_back(pile->at(i));
+		}
+		for (int i = 0; i < size; i++) {
+			pile->pop_back();
+		}
+		source = pile;
+	}
+	return 0;
+}
+
+int transferToPile() {
+	if (hand.size() > 0) {
+		if (hover != nullptr && hover != source) {
+			for (int i = 0; i < hand.size(); i++) {
+				hover->push_back(hand.at(i));
+			}
+			if (source->size() > 0 && !source->back().isFlipped()) {
+				source->back().flip();
+			}	
+		}
+		else
+		{
+			for (int i = 0; i < hand.size(); i++) {
+				source->push_back(hand.at(i));
+			}
+		}
+		hand.clear();
 	}
 	return 0;
 }
