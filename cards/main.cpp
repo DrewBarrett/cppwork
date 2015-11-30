@@ -48,7 +48,7 @@ int main()
 	//	for (int j = 0; j < 4; j++) {
 	//		//blit(game.deal().getImg(), bmp, 0, 0, x + i * 75, y + j * 100, 71, 96);
 	//		al_set_target_bitmap(bmp);
-	//		
+	//
 	//		//al_draw_bitmap(game.deal().getImg(),x + i * 75, y + j * 100,0);
 	//		//textout_ex(bmp, font, game.deal().getFileDir().c_str(),x + j * 12 , y + i*100, -1, 0);
 	//	}
@@ -86,10 +86,10 @@ int main()
 			transferToPile();
 		}
 		if (redraw && al_is_event_queue_empty(queue)) {
-			hover = nullptr;
+			hover = NULL;
 			al_get_mouse_state(&state);
 			al_set_target_bitmap(al_get_backbuffer(display));
-			al_clear_to_color(al_map_rgb(0, 0, 0));
+			//al_clear_to_color(al_map_rgb(0, 0, 0));
 			//al_draw_bitmap(bmp, bx, 0, 0);
 			for (int i = 0; i < 10; i += 2) {
 				al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
@@ -137,7 +137,7 @@ int main()
 				}
 				else {
 					al_draw_bitmap(foundation[i].back().getImg(), x1, y1, 0);
-					if ((state.y >= y1 && state.y <= y2 + (foundation[i].size() - 1) * 20)
+					if ((state.y >= y1 && state.y <= y2)
 						&& (state.x >= x1 && state.x <= x2)) {
 						al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
 						hover = &foundation[i];
@@ -188,13 +188,13 @@ int transferToHand(vector<Card> *pile, int start) {
 
 int transferToPile() {
 	if (hand.size() > 0) {
-		if (hover != nullptr && hover != source) {
+		if (hover != NULL && hover != source) {
 			for (int i = 0; i < hand.size(); i++) {
 				hover->push_back(hand.at(i));
 			}
 			if (source->size() > 0 && !source->back().isFlipped()) {
 				source->back().flip();
-			}	
+			}
 		}
 		else
 		{
