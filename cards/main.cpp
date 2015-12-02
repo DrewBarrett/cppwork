@@ -11,8 +11,9 @@ using namespace std;
 
 int init();
 int setup(Deck *);
-int transferToHand(vector<Card> *, int);
+int transferToHand(vector<Card> *, ALLEGRO_MOUSE_STATE, int, int, int ,int);
 int transferToPile();
+int drawPile(vector<Card> &);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -89,7 +90,7 @@ int main()
 			hover = NULL;
 			al_get_mouse_state(&state);
 			al_set_target_bitmap(al_get_backbuffer(display));
-			//al_clear_to_color(al_map_rgb(0, 0, 0));
+			al_clear_to_color(al_map_rgb(0, 0, 0));
 			//al_draw_bitmap(bmp, bx, 0, 0);
 			for (int i = 0; i < 10; i += 2) {
 				al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
@@ -108,7 +109,7 @@ int main()
 				for (int k = 0; k < table[i].size(); k++) {
 					al_draw_bitmap(table[i][k].getImg(), x1, y1 + k * 20, 0);
 				}
-
+				drawPile(table[i],state,x1,y1,x2,y2);
 			}
 			for (int i = 0; i < 7; i++) {
 				int x1 = i*(cardx + 20) + xOffset;
@@ -204,6 +205,11 @@ int transferToPile() {
 		}
 		hand.clear();
 	}
+	return 0;
+}
+
+int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int x2, int y2){
+
 	return 0;
 }
 
