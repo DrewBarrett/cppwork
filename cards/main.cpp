@@ -11,9 +11,9 @@ using namespace std;
 
 int init();
 int setup(Deck *);
-int transferToHand(vector<Card> *, ALLEGRO_MOUSE_STATE, int, int, int ,int);
+int transferToHand(vector<Card> *, int);
 int transferToPile();
-int drawPile(vector<Card> &);
+int drawPile(vector<Card> &, ALLEGRO_MOUSE_STATE, int, int, int ,int);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
