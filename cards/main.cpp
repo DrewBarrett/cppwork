@@ -189,7 +189,7 @@ int transferToHand(vector<Card> *pile, int start) {
 
 int transferToPile() {
 	if (hand.size() > 0) {
-		if (hover != NULL && hover != source) {
+		if (hover != NULL && source != NULL && hover != source) {
 			for (int i = 0; i < hand.size(); i++) {
 				hover->push_back(hand.at(i));
 			}
