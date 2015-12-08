@@ -23,6 +23,8 @@ class Card
               int getValue();
               int flip();
               bool isFlipped();
+              int leaveDeck();
+              bool isInDeck();
               string toString();
               ALLEGRO_BITMAP *getImg();
               string getFileDir();
@@ -30,6 +32,7 @@ class Card
       private:
               char mySuit;
               bool flipped;
+              bool inDeck;
               string myRank;
               int myValue;
               string myBitmapDir;

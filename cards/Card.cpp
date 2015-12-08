@@ -18,6 +18,7 @@ Card::Card(char suit, string rank, int value, string imgFile)
     img = al_load_bitmap(imgFile.c_str());
     backimg = al_load_bitmap("b1fv.bmp");
     flipped = false;
+    inDeck = true;
 }
 
 char Card::getSuit()
@@ -42,6 +43,15 @@ int Card::flip()
 bool Card::isFlipped()
 {
     return flipped;
+}
+int Card::leaveDeck()
+{
+    inDeck = false;
+	return 0;
+}
+bool Card::isInDeck()
+{
+    return inDeck;
 }
 ALLEGRO_BITMAP *Card::getImg()
 {
