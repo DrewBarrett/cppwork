@@ -203,7 +203,11 @@ int transferToHand(vector<Card> *pile, int start) {
 
 int transferToPile() {
 	if (hand.size() > 0) {
-		if (hover != NULL && source != NULL && hover != source && (hover->size() == 0 || !hover->back().isInDeck())) {
+		if (hover != NULL && source != NULL && hover != source
+            && (hover->size() == 0 || !hover->back().isInDeck())
+            && ((hover->size() != 0 && hover->back().getValue() == hand.front().getValue()+1)
+            || (hover->size() == 0 && hand.front().getValue() == 13 || hand.front().getValue() == 1))){
+            cout << hand.front().getValue() << endl;
 			for (int i = 0; i < hand.size(); i++) {
 				hover->push_back(hand.at(i));
 				hover->back().leaveDeck();
@@ -214,6 +218,7 @@ int transferToPile() {
 		}
 		else
 		{
+		    cout << hand.front().getValue() << endl;
 			for (int i = 0; i < hand.size(); i++) {
 				source->push_back(hand.at(i));
 			}
@@ -252,11 +257,11 @@ int setup(Deck *d) {
 	for (int k = 0; k < 7; k++) {
 		for (int i = 6; i >= k; i--) {
 			table[i].push_back(d->deal());
+			table[i].back().leaveDeck();
 		}
 	}
 	for (int i = 0; i < 7; i++) {
 		table[i].back().flip();
-		table[i].back().leaveDeck();
 	}
 	return 0;
 }
