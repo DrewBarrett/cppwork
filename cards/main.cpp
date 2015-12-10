@@ -95,19 +95,29 @@ int main()
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 			//al_draw_bitmap(bmp, bx, 0, 0);
-			for (int i = 0; i < 10; i += 2) {
-				al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
-			}
-
-			int x1 = 100 + xOffset;
+            int x1 = 100 + xOffset;
             int y1 = 10;
             int x2 = x1 + cardx;
             int y2 = y1 + cardy;
-            if(topDeck.size() == 0 && hand.size() == 0){
-                topDeck.push_back(game.deal());
-                topDeck[0].flip();
-            }
             drawPile(topDeck,state,x1,y1,x2,y2,20,false);
+            x1 = 10 + xOffset;
+            y1 = 10;
+            x2 = x1 + cardx;
+            y2 = y1 + cardy;
+            for (int i = 0; i < 10; i += 2) {
+				al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
+			}
+            if(state.x >= x1 && state.x <= x2 && state.y >= y1 && state.y <= y2){
+                al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
+                if(clicked && hand.size() == 0 && game.size() > 0 && clicktime < 0){
+                    if(topDeck.size() > 0){
+                        game.insert(topDeck.front());
+                        topDeck.pop_back();
+                    }
+                    topDeck.push_back(game.deal());
+                    topDeck[0].flip();
+                }
+            }
 
 			for (int i = 0; i < 7; i++) {
 				int x1 = i*(cardx + 20) + xOffset;
@@ -220,12 +230,14 @@ int transferToPile() {
                     hand.clear();
                 }
                 else if(hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 1) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()-1))){
-                    for (int i = 0; i < hand.size(); i++) {
-                        hover->push_back(hand.at(i));
-                        hover->back().leaveDeck();
-                    }
-                    if (source->size() > 0 && !source->back().isFlipped()) {
-                        source->back().flip();
+                    if(hand.front().getValue() == 1 || (hand.size() == 1 && hand.front().getSuit() == hover->back().getSuit())){
+                        for (int i = 0; i < hand.size(); i++) {
+                            hover->push_back(hand.at(i));
+                            hover->back().leaveDeck();
+                        }
+                        if (source->size() > 0 && !source->back().isFlipped()) {
+                            source->back().flip();
+                        }
                     }
                     hand.clear();
                 }

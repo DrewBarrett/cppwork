@@ -12,15 +12,16 @@ using namespace std;
 
 class Deck
 {
-      public: 
+      public:
               Deck();
-              Card deal();  //deals 1 card at a time              
+              Card deal();  //deals 1 card at a time
               int size();
               void clear();
+              void insert(Card);
               bool empty();
               string toString();
               void shuffleDeck();  // shuffles all the cards in the deck
-              
+
       private:
               vector<Card> myDeck;
 };

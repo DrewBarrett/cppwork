@@ -21,18 +21,18 @@ Deck::Deck()
              	img_src.insert(1, 1, r[j][0]);
      	     else
      	     	 img_src.insert(1, 1, '1');
-             
+
              if (j == 9)
                   img_src.insert(2, 1, '0' );
 
              img_src = img_src + ".bmp";
-             
+
              Card c(s[i], r[j], v[j], img_src);
              myDeck.push_back(c);
          }
      }
 }
-Card Deck::deal()  //deals 1 card at a time              
+Card Deck::deal()  //deals 1 card at a time
 {
  	 if (myDeck.size() > 0)
  	 {
@@ -43,7 +43,7 @@ Card Deck::deal()  //deals 1 card at a time
 	 Card c;
 	 return c;
  }
- 
+
 int Deck::size()
 {
     return myDeck.size();
@@ -52,6 +52,12 @@ void Deck::clear()
 {
      myDeck.clear();
  }
+void Deck::insert(Card c){
+    if(c.isFlipped()){
+        c.flip();
+    }
+    myDeck.insert(myDeck.begin(), c);
+}
 bool Deck::empty()
 {
      return myDeck.empty();
