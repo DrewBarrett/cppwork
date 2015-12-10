@@ -13,7 +13,7 @@ int init();
 int setup(Deck *);
 int transferToHand(vector<Card> *, int);
 int transferToPile();
-int drawPile(vector<Card> &, ALLEGRO_MOUSE_STATE &, int, int, int ,int, int);
+int drawPile(vector<Card> &, ALLEGRO_MOUSE_STATE &, int, int, int ,int, int, bool);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -26,6 +26,7 @@ CONST INT MAINPILEY = 200;
 CONST INT FOUNDATIONY = 50;
 
 bool clicked = false;
+bool hoverFoundation;
 int xOffset = 10;
 int cardx = 71;
 int cardy = 96;
@@ -89,6 +90,7 @@ int main()
 		}
 		if (redraw && al_is_event_queue_empty(queue)) {
 			hover = NULL;
+			hoverFoundation = false;
 			al_get_mouse_state(&state);
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -105,7 +107,7 @@ int main()
                 topDeck.push_back(game.deal());
                 topDeck[0].flip();
             }
-            drawPile(topDeck,state,x1,y1,x2,y2,20);
+            drawPile(topDeck,state,x1,y1,x2,y2,20,false);
 
 			for (int i = 0; i < 7; i++) {
 				int x1 = i*(cardx + 20) + xOffset;
@@ -121,7 +123,7 @@ int main()
 				/*for (int k = 0; k < table[i].size(); k++) {
 					al_draw_bitmap(table[i][k].getImg(), x1, y1 + k * 20, 0);
 				}*/
-				drawPile(table[i],state,x1,y1,x2,y2,20);
+				drawPile(table[i],state,x1,y1,x2,y2,20,false);
 			}
 			/*for (int i = 0; i < 7; i++) {
 				int x1 = i*(cardx + 20) + xOffset;
@@ -166,7 +168,7 @@ int main()
 					al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
 					hover = &foundation[i];
 				}*/
-				drawPile(foundation[i],state,x1,y1,x2,y2,0);
+				drawPile(foundation[i],state,x1,y1,x2,y2,0,true);
 			}
 
 			for (int i = 0; i < hand.size(); i++) {
@@ -203,32 +205,44 @@ int transferToHand(vector<Card> *pile, int start) {
 
 int transferToPile() {
 	if (hand.size() > 0) {
-		if (hover != NULL && source != NULL && hover != source
-            && (hover->size() == 0 || !hover->back().isInDeck())
-            && ((hover->size() != 0 && hover->back().getValue() == hand.front().getValue()+1)
-            || (hover->size() == 0 && hand.front().getValue() == 13 || hand.front().getValue() == 1))){
-            cout << hand.front().getValue() << endl;
-			for (int i = 0; i < hand.size(); i++) {
-				hover->push_back(hand.at(i));
-				hover->back().leaveDeck();
-			}
-			if (source->size() > 0 && !source->back().isFlipped()) {
-				source->back().flip();
-			}
+		if (hover != NULL && source != NULL && hover != source){
+            if((hover->size() != 0 && !hover->back().isInDeck())
+                || (hover->size() == 0 && (hand.front().getValue() == 13 || hand.front().getValue() == 1))){
+                cout << hand.front().getValue() << endl;
+                if(!hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 13) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()+1))){
+                    for (int i = 0; i < hand.size(); i++) {
+                        hover->push_back(hand.at(i));
+                        hover->back().leaveDeck();
+                    }
+                    if (source->size() > 0 && !source->back().isFlipped()) {
+                        source->back().flip();
+                    }
+                    hand.clear();
+                }
+                else if(hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 1) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()-1))){
+                    for (int i = 0; i < hand.size(); i++) {
+                        hover->push_back(hand.at(i));
+                        hover->back().leaveDeck();
+                    }
+                    if (source->size() > 0 && !source->back().isFlipped()) {
+                        source->back().flip();
+                    }
+                    hand.clear();
+                }
+            }
 		}
-		else
-		{
-		    cout << hand.front().getValue() << endl;
-			for (int i = 0; i < hand.size(); i++) {
-				source->push_back(hand.at(i));
-			}
-		}
-		hand.clear();
+	}
+	if (hand.size() > 0){
+        cout << hand.front().getValue() << endl;
+        for (int i = 0; i < hand.size(); i++) {
+            source->push_back(hand.at(i));
+        }
+        hand.clear();
 	}
 	return 0;
 }
 
-int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int x2, int y2, int space){
+int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int x2, int y2, int space, bool foundation){
     if (pile.size() == 0) {
         al_draw_rectangle(x1, y1, x2, y2, al_color_name("white"), 1);
     }
@@ -238,6 +252,9 @@ int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int
     if ((state.y >= y1&& state.y <= y2)
         && (state.x >= x1 && state.x <= x2)) {
         hover = &pile;
+        if(foundation){
+            hoverFoundation = true;
+        }
     }
     for (int k = pile.size()-1; k >= 0; k--) {
         if (pile[k].isFlipped()) {
@@ -245,6 +262,9 @@ int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int
                 && (state.x >= x1 && state.x <= x2)) {
                 al_draw_rectangle(x1, y1 + k * space, x2, y2 + (pile.size() - 1) * space, al_color_name("cyan"), 1);
                 hover = &pile;
+                if(foundation){
+                    hoverFoundation = true;
+                }
                 transferToHand(&pile, k);
                 break;
             }
