@@ -27,6 +27,7 @@ CONST INT FOUNDATIONY = 50;
 
 bool clicked = false;
 bool hoverFoundation;
+bool won = false;
 int xOffset = 10;
 int cardx = 71;
 int cardy = 96;
@@ -66,7 +67,11 @@ int main()
 	bool redraw = true;
 	Card c;
 	setup(&game);
+	int clicktime = 0;
 	while (1) {
+        if(!clicked){
+            clicktime--;
+        }
 		ALLEGRO_EVENT event;
 		al_wait_for_event(queue, &event);
 		//al_get_next_event(queue, &event);
@@ -89,6 +94,7 @@ int main()
 			transferToPile();
 		}
 		if (redraw && al_is_event_queue_empty(queue)) {
+
 			hover = NULL;
 			hoverFoundation = false;
 			al_get_mouse_state(&state);
@@ -110,6 +116,7 @@ int main()
             if(state.x >= x1 && state.x <= x2 && state.y >= y1 && state.y <= y2){
                 al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
                 if(clicked && hand.size() == 0 && game.size() > 0 && clicktime < 0){
+                    clicktime = 5;
                     if(topDeck.size() > 0){
                         game.insert(topDeck.front());
                         topDeck.pop_back();
@@ -220,14 +227,17 @@ int transferToPile() {
                 || (hover->size() == 0 && (hand.front().getValue() == 13 || hand.front().getValue() == 1))){
                 cout << hand.front().getValue() << endl;
                 if(!hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 13) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()+1))){
-                    for (int i = 0; i < hand.size(); i++) {
-                        hover->push_back(hand.at(i));
-                        hover->back().leaveDeck();
+                    if((((hover->back().getSuit() == 's' || hover->back().getSuit() == 'c')&&(hand.front().getSuit() != 's' && hand.front().getSuit() != 'c'))
+                       || ((hover->back().getSuit() == 'd' || hover->back().getSuit() == 'h')&&(hand.front().getSuit() != 'd' && hand.front().getSuit() != 'h')))|| hover->size() == 0){
+                        for (int i = 0; i < hand.size(); i++) {
+                            hover->push_back(hand.at(i));
+                            hover->back().leaveDeck();
+                        }
+                        if (source->size() > 0 && !source->back().isFlipped()) {
+                            source->back().flip();
+                        }
+                        hand.clear();
                     }
-                    if (source->size() > 0 && !source->back().isFlipped()) {
-                        source->back().flip();
-                    }
-                    hand.clear();
                 }
                 else if(hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 1) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()-1))){
                     if(hand.front().getValue() == 1 || (hand.size() == 1 && hand.front().getSuit() == hover->back().getSuit())){
@@ -238,8 +248,8 @@ int transferToPile() {
                         if (source->size() > 0 && !source->back().isFlipped()) {
                             source->back().flip();
                         }
+                        hand.clear();
                     }
-                    hand.clear();
                 }
             }
 		}
@@ -251,6 +261,7 @@ int transferToPile() {
         }
         hand.clear();
 	}
+
 	return 0;
 }
 
