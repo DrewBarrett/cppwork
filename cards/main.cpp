@@ -30,6 +30,7 @@ CONST INT FOUNDATIONY = 50;
 bool clicked = false;
 bool hoverFoundation;
 bool won = false;
+bool cheat = false;
 int xOffset = 10;
 int cardx = 71;
 int cardy = 96;
@@ -74,7 +75,6 @@ int main()
 	al_start_timer(timer);
 	bool redraw = true;
 	bool title = true;
-	bool won = false;
 	Card c;
 	setup(&game);
 	int clicktime = 0;
@@ -92,6 +92,8 @@ int main()
 			if (title){
                 title = false;
 			}
+			if (event.keyboard.keycode == ALLEGRO_KEY_A)
+                cheat = true;
 			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 				break;
 			//game.deal();
@@ -118,14 +120,16 @@ int main()
 					"Press any key to continue or ESC to exit...");
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
-            }else if (won){
-                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Win!");
             }else{
+
                 hover = NULL;
                 hoverFoundation = false;
                 al_get_mouse_state(&state);
                 al_set_target_bitmap(al_get_backbuffer(display));
                 al_clear_to_color(al_map_rgb(0, 0, 0));
+                if (won){
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 50, ALLEGRO_ALIGN_CENTRE, "You Won!");
+                }
                 //al_draw_bitmap(bmp, bx, 0, 0);
                 int x1 = 100 + xOffset;
                 int y1 = 10;
@@ -288,7 +292,7 @@ int transferToPile() {
         }
         hand.clear();
 	}
-    if((foundation[0].size()==12&&foundation[1].size()==12&&foundation[2].size()==12&&foundation[3].size()==12)||cheat){
+    if(cheat||(foundation[0].size()==12&&foundation[1].size()==12&&foundation[2].size()==12&&foundation[3].size()==12)){
         won = true;
     }
 	return 0;
