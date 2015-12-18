@@ -1,12 +1,20 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 #include <string>
+#include <allegro5/allegro.h>
+#include "allegro5/allegro_image.h"
+#include "allegro5/allegro_primitives.h"
+#include "allegro5/allegro_font.h"
+#include "allegro5/allegro_ttf.h"
+#include <allegro5/allegro_color.h>
 
 class Button
 {
     public:
         /** Default constructor */
         Button(int, int, std::string);
+        void draw(ALLEGRO_MOUSE_STATE);
+        int checkMouse(ALLEGRO_MOUSE_STATE);
         int Getx() { return x; }
         /** Set x
          * \param val New value to set
@@ -46,11 +54,13 @@ class Button
         void Setheight(int val) { height = val; }
     protected:
     private:
+        ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
         int x; //!< Member variable "x"
         int y; //!< Member variable "y"
         std::string text; //!< Member variable "text"
         int width; //!< Member variable "width"
         int height; //!< Member variable "height"
+        ALLEGRO_COLOR color;
 };
 
 #endif // BUTTON_H

@@ -7,16 +7,18 @@
 #include <ctime>
 //#include "hand.h"
 #include "deck.h"
+#include "Button.h"
 #include "allegro5/allegro_font.h"
 #define ScreenWidth 1024
 #define ScreenHeight 768
 using namespace std;
-
+//Drew Barrett
 int init();
-int setup(Deck *);
+int setup(Deck &);
 int transferToHand(vector<Card> *, int);
 int transferToPile();
 int drawPile(vector<Card> &, ALLEGRO_MOUSE_STATE &, int, int, int ,int, int, bool);
+void restart(Deck &);
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -27,6 +29,7 @@ ALLEGRO_MOUSE_STATE state;
 CONST INT MAINPILEY = 200;
 CONST INT FOUNDATIONY = 50;
 
+
 bool clicked = false;
 bool hoverFoundation;
 bool won = false;
@@ -34,6 +37,7 @@ bool cheat = false;
 int xOffset = 10;
 int cardx = 71;
 int cardy = 96;
+int turn = 0;
 vector<Card> table[7];
 vector<Card> foundation[4];
 vector<Card> topDeck;
@@ -49,7 +53,7 @@ int main()
         return -1;
     }
     ALLEGRO_BITMAP *rules = al_load_bitmap("rules.png");
-	Deck game;
+    Deck game;
 	//ALLEGRO_BITMAP *bmp = al_create_bitmap(1280, 640);
 	//Card a('c', "Ace", 14, "c1.bmp");
 
@@ -66,7 +70,6 @@ int main()
 	//		//textout_ex(bmp, font, game.deal().getFileDir().c_str(),x + j * 12 , y + i*100, -1, 0);
 	//	}
 	//}
-	game.shuffleDeck();
 	queue = al_create_event_queue();
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_mouse_event_source());
@@ -76,8 +79,9 @@ int main()
 	bool redraw = true;
 	bool title = true;
 	Card c;
-	setup(&game);
+	setup(game);
 	int clicktime = 0;
+	Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
 	while (1) {
         if(!clicked){
             clicktime--;
@@ -110,6 +114,10 @@ int main()
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			clicked = false;
 			transferToPile();
+			al_get_mouse_state(&state);
+			if(won && btnRestart.checkMouse(state) == 2){
+                restart(game);
+			}
 		}
 		if (redraw && al_is_event_queue_empty(queue)) {
             if(title){
@@ -129,6 +137,7 @@ int main()
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 if (won){
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 50, ALLEGRO_ALIGN_CENTRE, "You Won!");
+                    btnRestart.draw(state);
                 }
                 //al_draw_bitmap(bmp, bx, 0, 0);
                 int x1 = 100 + xOffset;
@@ -136,16 +145,22 @@ int main()
                 int x2 = x1 + cardx;
                 int y2 = y1 + cardy;
                 drawPile(topDeck,state,x1,y1,x2,y2,20,false);
+                al_draw_textf(font, al_color_name("white"), 0, 120, ALLEGRO_ALIGN_LEFT, "Turn: %d", turn);
                 x1 = 10 + xOffset;
                 y1 = 10;
                 x2 = x1 + cardx;
                 y2 = y1 + cardy;
-                for (int i = 0; i < 10; i += 2) {
+                int deckSize = 10;
+                if(game.size()<10){
+                    deckSize = game.size();
+                }
+                for (int i = 0; i < deckSize; i += 2) {
                     al_draw_bitmap(c.getImg(), i + 10, i + 10, 0);
                 }
                 if(state.x >= x1 && state.x <= x2 && state.y >= y1 && state.y <= y2){
                     al_draw_rectangle(x1, y1, x2, y2, al_color_name("cyan"), 1);
                     if(clicked && hand.size() == 0 && game.size() > 0 && clicktime < 0){
+                        turn++;
                         clicktime = 5;
                         if(topDeck.size() > 0){
                             game.insert(topDeck.front());
@@ -268,6 +283,7 @@ int transferToPile() {
                             source->back().flip();
                         }
                         hand.clear();
+                        turn++;
                     }
                 }
                 else if(hoverFoundation && ((hover->size() == 0 && hand.front().getValue() == 1) || (hover->size() > 0 && hover->back().getValue() == hand.front().getValue()-1))){
@@ -280,6 +296,7 @@ int transferToPile() {
                             source->back().flip();
                         }
                         hand.clear();
+                        turn++;
                     }
                 }
             }
@@ -329,10 +346,11 @@ int drawPile(vector<Card> &pile, ALLEGRO_MOUSE_STATE &state, int x1, int y1, int
 	return 0;
 }
 
-int setup(Deck *d) {
+int setup(Deck &d) {
+    d.shuffleDeck();
 	for (int k = 0; k < 7; k++) {
 		for (int i = 6; i >= k; i--) {
-			table[i].push_back(d->deal());
+			table[i].push_back(d.deal());
 			table[i].back().leaveDeck();
 		}
 	}
@@ -340,6 +358,22 @@ int setup(Deck *d) {
 		table[i].back().flip();
 	}
 	return 0;
+}
+
+void restart(Deck &d){
+    d = Deck();
+    won = false;
+    cheat = false;
+    turn = 0;
+    for(int i = 0; i < 7; i++){
+        table[i].clear();
+    }
+    for(int i = 0; i < 4; i++){
+        foundation[i].clear();
+    }
+    topDeck.clear();
+    hand.clear();
+    setup(d);
 }
 
 int init()
