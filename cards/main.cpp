@@ -309,7 +309,7 @@ int transferToPile() {
         }
         hand.clear();
 	}
-    if(cheat||(foundation[0].size()==12&&foundation[1].size()==12&&foundation[2].size()==12&&foundation[3].size()==12)){
+    if(cheat||(foundation[0].size()==13&&foundation[1].size()==13&&foundation[2].size()==13&&foundation[3].size()==13)){
         won = true;
     }
 	return 0;
