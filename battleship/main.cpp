@@ -57,7 +57,7 @@ int main(int argc, char **argv)
             al_clear_to_color(al_map_rgb(0, 0, 0));
             if(title){
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Solitaire!");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Battleship!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
 					"Press any key to continue or ESC to exit...");
