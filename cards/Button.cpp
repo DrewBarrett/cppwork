@@ -7,7 +7,7 @@ Button::Button(int x1, int y1, std::string text1)
 	text = text1;
 	height = 35;
 	width = text.size() * 20;
-	//font = al_load_font("comic.ttf", 20, 0);
+	font = al_load_font("comic.ttf", 20, 0);
 	color = al_color_name("white");
 }
 

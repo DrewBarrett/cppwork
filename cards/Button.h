@@ -54,7 +54,7 @@ public:
 	void Setheight(int val) { height = val; }
 protected:
 private:
-	ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
+	ALLEGRO_FONT *font;
 	int x; //!< Member variable "x"
 	int y; //!< Member variable "y"
 	std::string text; //!< Member variable "text"
