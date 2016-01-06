@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
-	timer = al_create_timer(1.0 / 60);
+    timer = al_create_timer(1.0 / 60);
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_start_timer(timer);
     bool redraw = true;
@@ -42,28 +42,28 @@ int main(int argc, char **argv)
                 break;
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if(title){
+            if(title) {
                 title = false;
-			}
-		}
-		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-			al_get_mouse_state(&state);
-		}
-        if (event.type == ALLEGRO_EVENT_TIMER){
+            }
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+            al_get_mouse_state(&state);
+        }
+        if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
         }
         if (redraw && al_is_event_queue_empty(queue)) {
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            if(title){
+            if(title) {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Battleship!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
-				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
-					"Press any key to continue or ESC to exit...");
-				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
-					"Created by Drew Barrett");
-            }else{
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
+                             "Press any key to continue or ESC to exit...");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
+                             "Created by Drew Barrett");
+            } else {
 
             }
             al_flip_display();
@@ -73,22 +73,21 @@ int main(int argc, char **argv)
     return 0;
 }
 
-int init(){
+int init()
+{
 
-    if(!al_init())
-    {
+    if(!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
         return -1;
     }
     display = al_create_display(ScreenWidth, ScreenHeight);
-    if(!display)
-    {
+    if(!display) {
         fprintf(stderr, "failed to create display!\n");
         return -1;
     }
-    al_clear_to_color(al_map_rgb(0,0,0));
+    al_clear_to_color(al_map_rgb(0, 0, 0));
     al_init_image_addon();
-    if(!al_init_primitives_addon()){
+    if(!al_init_primitives_addon()) {
         fprintf(stderr, "failed to initialize primitives!\n");
         return -1;
     }
