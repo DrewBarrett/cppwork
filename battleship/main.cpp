@@ -6,6 +6,7 @@
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
 #include "Button.h"
+#include "grid.h"
 //Dynamic Link
 //Drew Barrett
 #define ScreenWidth 1024
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
     al_start_timer(timer);
     bool redraw = true;
     bool title = true;
+    grid AIGrid(false,ScreenWidth/2 - (350/4) - 350,100);
+    grid playerGrid(true,ScreenWidth/2 + (350/4),100);
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -64,7 +67,9 @@ int main(int argc, char **argv)
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
                              "Created by Drew Barrett");
             } else {
-
+                al_get_mouse_state(&state);
+                AIGrid.draw(state);
+                playerGrid.draw(state);
             }
             al_flip_display();
         }

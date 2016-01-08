@@ -1,6 +1,9 @@
 #ifndef GRIDSQUARE_H
 #define GRIDSQUARE_H
-
+#include <allegro5/allegro.h>
+#include "allegro5/allegro_image.h"
+#include "allegro5/allegro_primitives.h"
+#include <allegro5/allegro_color.h>
 
 class gridSquare
 {
@@ -15,6 +18,7 @@ class gridSquare
          * \param val New value to set
          */
         void Sethit(bool val) { hit = val; }
+        void draw(int, int, ALLEGRO_MOUSE_STATE);
         /** Access miss
          * \return The current value of miss
          */
@@ -35,6 +39,7 @@ class gridSquare
          * \return The current value of playerOwned
          */
         bool GetplayerOwned() { return playerOwned; }
+        int getSize() { return width; }
         /** Set playerOwned
          * \param val New value to set
          */
@@ -45,6 +50,9 @@ class gridSquare
         bool miss; //!< Member variable "miss"
         bool occupied; //!< Member variable "occupied"
         bool playerOwned; //!< Member variable "playerOwned"
+        int width;
+        int height;
+        ALLEGRO_COLOR color;
 };
 
 #endif // GRIDSQUARE_H
