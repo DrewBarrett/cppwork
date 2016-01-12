@@ -44,6 +44,8 @@
 		<Unit filename="gridSquare.cpp" />
 		<Unit filename="gridSquare.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="ship.cpp" />
+		<Unit filename="ship.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
