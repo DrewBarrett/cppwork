@@ -1,12 +1,18 @@
 #ifndef SHIP_H
 #define SHIP_H
-
+#include <allegro5/allegro.h>
+#include "allegro5/allegro_image.h"
+#include "allegro5/allegro_primitives.h"
+#include "allegro5/allegro_font.h"
+#include "allegro5/allegro_ttf.h"
+#include <allegro5/allegro_color.h>
 
 class ship
 {
     public:
         /** Default constructor */
         ship(int ss, int x, int y, int deg);
+        void draw();
         /** Access ssize
          * \return The current value of ssize
          */

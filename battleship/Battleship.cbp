@@ -39,6 +39,8 @@
 		<Unit filename="Button.cpp" />
 		<Unit filename="Button.h" />
 		<Unit filename="comic.ttf" />
+		<Unit filename="fleet.cpp" />
+		<Unit filename="fleet.h" />
 		<Unit filename="grid.cpp" />
 		<Unit filename="grid.h" />
 		<Unit filename="gridSquare.cpp" />

@@ -7,6 +7,7 @@
 #include "allegro5/allegro_ttf.h"
 #include "Button.h"
 #include "grid.h"
+#include "fleet.h"
 //Dynamic Link
 //Drew Barrett
 #define ScreenWidth 1024
@@ -35,6 +36,8 @@ int main(int argc, char **argv)
     bool title = true;
     grid AIGrid(false,ScreenWidth/2 - (350/4) - 350,100);
     grid playerGrid(true,ScreenWidth/2 + (350/4),100);
+    fleet AIFleet(false);
+    fleet playerFleet(true);
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -70,6 +73,7 @@ int main(int argc, char **argv)
                 al_get_mouse_state(&state);
                 AIGrid.draw(state);
                 playerGrid.draw(state);
+                playerFleet.draw();
             }
             al_flip_display();
         }
