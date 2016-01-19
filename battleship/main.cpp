@@ -73,7 +73,7 @@ int main(int argc, char **argv)
                 al_get_mouse_state(&state);
                 AIGrid.draw(state);
                 playerGrid.draw(state);
-                playerFleet.draw();
+                playerFleet.draw(state);
             }
             al_flip_display();
         }

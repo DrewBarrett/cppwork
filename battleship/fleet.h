@@ -8,7 +8,7 @@ class fleet
     public:
         /** Default constructor */
         fleet(bool playerOwned);
-        void draw();
+        void draw(ALLEGRO_MOUSE_STATE);
         /** Default destructor */
         /** Access fleet
          * \return The current value of fleet

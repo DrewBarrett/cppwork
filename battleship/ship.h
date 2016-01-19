@@ -12,7 +12,7 @@ class ship
     public:
         /** Default constructor */
         ship(int ss, int x, int y, int deg);
-        void draw();
+        void draw(ALLEGRO_MOUSE_STATE);
         /** Access ssize
          * \return The current value of ssize
          */

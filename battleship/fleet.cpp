@@ -12,8 +12,8 @@ fleet::fleet(bool pOwned)
     }
 }
 
-void fleet::draw(){
+void fleet::draw(ALLEGRO_MOUSE_STATE state){
     for (int i = 0; i < fleetShips.size(); i++){
-        fleetShips[i].draw();
+        fleetShips[i].draw(state);
     }
 }
