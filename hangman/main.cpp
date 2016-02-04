@@ -49,10 +49,12 @@ int main(int argc, char **argv)
 
 	srand(time(0));
     random_shuffle(words.begin(), words.end());
-    const string THE_WORD = words[0];            // word to guess
+    string THE_WORD = words[0];            // word to guess
     int wrong = 0;                               // number of incorrect guesses
     string soFar(THE_WORD.size(), '-');          // word guessed so far
     string used = "";                            // letters already guessed
+    bool keyPressed = false;
+    int key = 0;
 
     cout << "Welcome to Hangman.  Good luck!\n";
     while (1) {
@@ -63,6 +65,10 @@ int main(int argc, char **argv)
         if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 break;
+            //cout << event.keyboard.keycode << endl;
+            keyPressed = true;
+            key = event.keyboard.keycode;
+            cout << al_keycode_to_name(event.keyboard.keycode) << endl;
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
 			if(title){
@@ -80,46 +86,44 @@ int main(int argc, char **argv)
             al_clear_to_color(al_map_rgb(0, 0, 0));
             if(title){
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Solitaire!");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Hang Man!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
 					"Press any key to continue or ESC to exit...");
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
             }else{
+                al_clear_to_color(al_map_rgb(0, 0, 0));
                 if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 {
                     cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
                     cout << "\nYou've used the following letters:\n" << used << endl;
                     cout << "\nSo far, the word is:\n" << soFar << endl;
 
-                    char guess;
+                    string guess;
                     cout << "\n\nEnter your guess: ";
-                    cin >> guess;
-                    guess = toupper(guess); //make uppercase since secret word in uppercase
-                    while (used.find(guess) != string::npos)
-                    {
-                        cout << "\nYou've already guessed " << guess << endl;
-                        cout << "Enter your guess: ";
-                        cin >> guess;
-                        guess = toupper(guess);
-                    }
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
+                    //cin >> guess;
+                    if(keyPressed){
+                        guess = al_keycode_to_name(key);
+                        keyPressed = false;
+                        if(used.find(guess) == string::npos){
+                            used += guess;
+                            if (THE_WORD.find(guess) != string::npos)
+                            {
+                                cout << "That's right! " << guess << " is in the word.\n";
 
-                    used += guess;
-
-                    if (THE_WORD.find(guess) != string::npos)
-                    {
-                        cout << "That's right! " << guess << " is in the word.\n";
-
-                        // update soFar to include newly guessed letter
-                        for (int i = 0; i < THE_WORD.length(); ++i)
-                            if (THE_WORD[i] == guess)
-                                soFar[i] = guess;
-                    }
-                    else
-                    {
-                        cout << "Sorry, " << guess << " isn't in the word.\n";
-                        ++wrong;
+                                // update soFar to include newly guessed letter
+                                for (int i = 0; i < THE_WORD.length(); ++i)
+                                    if (THE_WORD.at(i) == char(guess))
+                                        soFar[i] = guess;
+                            }
+                            else
+                            {
+                                cout << "Sorry, " << guess << " isn't in the word.\n";
+                                ++wrong;
+                            }
+                        }
                     }
                 }
                 if (wrong == MAX_WRONG)

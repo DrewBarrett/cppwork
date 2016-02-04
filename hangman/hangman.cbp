@@ -39,6 +39,7 @@
 		<Unit filename="Button.cpp" />
 		<Unit filename="Button.h" />
 		<Unit filename="comic.ttf" />
+		<Unit filename="hangman.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
