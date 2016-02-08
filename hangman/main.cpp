@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     string used = "";                            // letters already guessed
     bool keyPressed = false;
     int key = 0;
-
+    bool printStuff = true;
     cout << "Welcome to Hangman.  Good luck!\n";
     while (1) {
         ALLEGRO_EVENT event;
@@ -96,16 +96,26 @@ int main(int argc, char **argv)
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 {
-                    cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
-                    cout << "\nYou've used the following letters:\n" << used << endl;
-                    cout << "\nSo far, the word is:\n" << soFar << endl;
-
-                    string guess;
-                    cout << "\n\nEnter your guess: ";
-                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
+                    if(printStuff){
+                        cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
+                        cout << "\nYou've used the following letters:\n" << used << endl;
+                        cout << "\nSo far, the word is:\n" << soFar << endl;
+                    }
+                    al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE,
+                                  "You have %d incorrect guesses left.", (MAX_WRONG - wrong));
+                    al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
+                                  "You've used the following letters: %s", used.c_str());
+                    al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 60, ALLEGRO_ALIGN_CENTRE,
+                                  "So far, the word is: %s", soFar.c_str());
+                    printStuff = false;
+                    char guess;
+                    //cout << "\n\nEnter your guess: ";
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 100, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
                     //cin >> guess;
                     if(keyPressed){
-                        guess = al_keycode_to_name(key);
+                        printStuff = true;
+                        string keyName = al_keycode_to_name(key);
+                        guess = keyName[0];
                         keyPressed = false;
                         if(used.find(guess) == string::npos){
                             used += guess;
@@ -115,7 +125,7 @@ int main(int argc, char **argv)
 
                                 // update soFar to include newly guessed letter
                                 for (int i = 0; i < THE_WORD.length(); ++i)
-                                    if (THE_WORD.at(i) == char(guess))
+                                    if (THE_WORD[i] == guess)
                                         soFar[i] = guess;
                             }
                             else
@@ -128,10 +138,9 @@ int main(int argc, char **argv)
                 }
                 if (wrong == MAX_WRONG)
                     cout << "\nYou've been hanged!";
-                else
+                else if(soFar == THE_WORD)
                     cout << "\nYou guessed it!";
-
-                cout << "\nThe word was " << THE_WORD << endl;
+                //cout << "\nThe word was " << THE_WORD << endl;
             }
             al_flip_display();
         }
