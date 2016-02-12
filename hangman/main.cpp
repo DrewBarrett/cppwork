@@ -58,6 +58,8 @@ int main(int argc, char **argv)
     bool printStuff = true;
     string message = "";
     cout << "Welcome to Hangman.  Good luck!\n";
+    Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
+    Button btnNext = Button(ScreenWidth/2, ScreenHeight - 100, "Next Word");
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -117,14 +119,17 @@ int main(int argc, char **argv)
                 printStuff = false;
                 char guess;
                 //cout << "\n\nEnter your guess: ";
+                al_get_mouse_state(&state);
                 if (wrong == MAX_WRONG){
                     cout << "\nYou've been hanged!";
                     message = "";
                     message = "You've been hanged! The word was " + THE_WORD;
+                    btnRestart.draw(state);
                 }else if(soFar == THE_WORD){
                     cout << "\nYou guessed it!";
                     message = "";
                     message = "You guessed it! The word was " + THE_WORD;
+                    btnNext.draw(state);
                 }else{
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 120, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
                     //cin >> guess;
