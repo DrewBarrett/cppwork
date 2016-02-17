@@ -91,10 +91,9 @@ int main(int argc, char **argv)
 			}
 			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2){
                 words.erase(words.begin());
-                cout << THE_WORD;
                 THE_WORD = words[0];
-                cout << THE_WORD;
-                soFar = (THE_WORD.size(), '-');
+                soFar = "";
+                soFar.resize(THE_WORD.size(), '-');
                 wrong = 0;
                 used = "";
                 message = "";
