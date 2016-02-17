@@ -50,7 +50,9 @@ int main(int argc, char **argv)
 	srand(time(0));
     random_shuffle(words.begin(), words.end());
     string THE_WORD = words[0];            // word to guess
-    int wrong = 0;                               // number of incorrect guesses
+    int wrong = 0;
+    int incorrect = 0;
+    int correct = 0;                              // number of incorrect guesses
     string soFar(THE_WORD.size(), '-');          // word guessed so far
     string used = "";                            // letters already guessed
     bool keyPressed = false;
@@ -84,6 +86,21 @@ int main(int argc, char **argv)
 		}
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			al_get_mouse_state(&state);
+			if(wrong == MAX_WRONG && btnRestart.checkMouse(state) == 2){
+
+			}
+			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2){
+                words.erase(words.begin());
+                cout << THE_WORD;
+                THE_WORD = words[0];
+                cout << THE_WORD;
+                soFar = (THE_WORD.size(), '-');
+                wrong = 0;
+                used = "";
+                message = "";
+                printStuff = true;
+                keyPressed = false;
+			}
 		}
         if (event.type == ALLEGRO_EVENT_TIMER){
             redraw = true;
@@ -132,7 +149,7 @@ int main(int argc, char **argv)
                     btnNext.draw(state);
                 }else{
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 120, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
-                    //cin >> guess;
+                    //cin >> guess;keyPressed = false;
                     if(keyPressed){
                         printStuff = true;
                         string keyName = al_keycode_to_name(key);
