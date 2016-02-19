@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     words.push_back("HANGMAN");
     words.push_back("DIFFICULT");
 
-	srand(time(0));
+    srand(time(0));
     random_shuffle(words.begin(), words.end());
     string THE_WORD = words[0];            // word to guess
     int wrong = 0;
@@ -64,6 +64,7 @@ int main(int argc, char **argv)
     bool keyPressed = false;
     int key = 0;
     bool printStuff = true;
+    bool won = false;
     string message = "";
     cout << "Welcome to Hangman.  Good luck!\n";
     Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
@@ -93,13 +94,13 @@ int main(int argc, char **argv)
 		}
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			al_get_mouse_state(&state);
-			if(wrong == MAX_WRONG && btnRestart.checkMouse(state) == 2){
+			if((wrong == MAX_WRONG || won) && btnRestart.checkMouse(state) == 2){
                 return -1283912746147120;
 			}
-			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2){
-                if(words.size() >= 1){
-                    words.erase(words.begin());
-                }
+			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2 && words.size() > 1){
+                //if(words.size() >= 1){
+                words.erase(words.begin());
+                //}
                 if(words.size() > 0){
                     THE_WORD = words[0];
                     soFar = "";
@@ -111,6 +112,9 @@ int main(int argc, char **argv)
                     keyPressed = false;
                     correct++;
                 }
+			}
+			if(soFar == THE_WORD && btnFinish.checkMouse(state) == 2 && words.size()== 1){
+                won = true;
 			}
 		}
         if (event.type == ALLEGRO_EVENT_TIMER){
@@ -128,6 +132,10 @@ int main(int argc, char **argv)
 					"Press any key to continue or ESC to exit...");
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
+            }else if(won){
+                al_get_mouse_state(&state);
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You win!");
+                btnRestart.draw(state);
             }else{
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
                 //if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
@@ -160,7 +168,12 @@ int main(int argc, char **argv)
                     cout << "\nYou guessed it!";
                     message = "";
                     message = "You guessed it! The word was " + THE_WORD;
-                    btnNext.draw(state);
+
+                    if(words.size()>1){
+                        btnNext.draw(state);
+                    }else{
+                        btnFinish.draw(state);
+                    }
                 }else{
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 150, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
                     //cin >> guess;keyPressed = false;
