@@ -22,10 +22,16 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 ALLEGRO_MOUSE_STATE state;
+ALLEGRO_BITMAP *bg;
 
 int main(int argc, char **argv)
 {
     init();
+    bg = al_load_bitmap("bg.png");
+    if(!bg){
+        cout << "bg failed";
+        return -1;
+    }
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -62,6 +68,7 @@ int main(int argc, char **argv)
     cout << "Welcome to Hangman.  Good luck!\n";
     Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
     Button btnNext = Button(ScreenWidth/2, ScreenHeight - 100, "Next Word");
+    Button btnFinish = Button(ScreenWidth/2, ScreenHeight - 100, "Finish Game");
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -87,18 +94,23 @@ int main(int argc, char **argv)
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			al_get_mouse_state(&state);
 			if(wrong == MAX_WRONG && btnRestart.checkMouse(state) == 2){
-
+                return -1283912746147120;
 			}
 			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2){
-                words.erase(words.begin());
-                THE_WORD = words[0];
-                soFar = "";
-                soFar.resize(THE_WORD.size(), '-');
-                wrong = 0;
-                used = "";
-                message = "";
-                printStuff = true;
-                keyPressed = false;
+                if(words.size() >= 1){
+                    words.erase(words.begin());
+                }
+                if(words.size() > 0){
+                    THE_WORD = words[0];
+                    soFar = "";
+                    soFar.resize(THE_WORD.size(), '-');
+                    //wrong = 0;
+                    used = "";
+                    message = "";
+                    printStuff = true;
+                    keyPressed = false;
+                    correct++;
+                }
 			}
 		}
         if (event.type == ALLEGRO_EVENT_TIMER){
@@ -107,8 +119,9 @@ int main(int argc, char **argv)
         if (redraw && al_is_event_queue_empty(queue)) {
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
+            al_draw_bitmap(bg,0,0,0);
             if(title){
-                al_clear_to_color(al_map_rgb(0, 0, 0));
+                //al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Hang Man!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
@@ -116,7 +129,7 @@ int main(int argc, char **argv)
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
             }else{
-                al_clear_to_color(al_map_rgb(0, 0, 0));
+                //al_clear_to_color(al_map_rgb(0, 0, 0));
                 //if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 //{
                 if(printStuff){
@@ -124,13 +137,15 @@ int main(int argc, char **argv)
                     cout << "\nYou've used the following letters:\n" << used << endl;
                     cout << "\nSo far, the word is:\n" << soFar << endl;
                 }
-                al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE,
-                              "You have %d incorrect guesses left.", (MAX_WRONG - wrong));
                 al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
-                              "You've used the following letters: %s", used.c_str());
+                              "You have %d incorrect guesses left.", (MAX_WRONG - wrong));
+                al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE,
+                              "You have guessed %d words correctly. There are %d left.", correct, words.size());
                 al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 60, ALLEGRO_ALIGN_CENTRE,
+                              "You've used the following letters: %s", used.c_str());
+                al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 90, ALLEGRO_ALIGN_CENTRE,
                               "So far, the word is: %s", soFar.c_str());
-                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 90, ALLEGRO_ALIGN_CENTRE,
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 120, ALLEGRO_ALIGN_CENTRE,
                               message.c_str());
                 printStuff = false;
                 char guess;
@@ -147,7 +162,7 @@ int main(int argc, char **argv)
                     message = "You guessed it! The word was " + THE_WORD;
                     btnNext.draw(state);
                 }else{
-                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 120, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 150, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
                     //cin >> guess;keyPressed = false;
                     if(keyPressed){
                         printStuff = true;
