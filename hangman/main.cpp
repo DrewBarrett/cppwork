@@ -70,6 +70,7 @@ int main(int argc, char **argv)
     Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
     Button btnNext = Button(ScreenWidth/2, ScreenHeight - 100, "Next Word");
     Button btnFinish = Button(ScreenWidth/2, ScreenHeight - 100, "Finish Game");
+    Button btnQuit = Button(ScreenWidth/2, ScreenHeight - 50, "Quit Early");
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -159,6 +160,7 @@ int main(int argc, char **argv)
                 char guess;
                 //cout << "\n\nEnter your guess: ";
                 al_get_mouse_state(&state);
+                btnQuit.draw(state);
                 if (wrong == MAX_WRONG){
                     cout << "\nYou've been hanged!";
                     message = "";
