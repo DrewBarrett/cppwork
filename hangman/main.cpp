@@ -5,6 +5,8 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
+#include "allegro5/allegro_audio.h"
+#include "allegro5/allegro_acodec.h"
 #include "Button.h"
 #include <iostream>
 #include <string>
@@ -37,6 +39,12 @@ int main(int argc, char **argv)
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
         return -1;
     }
+    ALLEGRO_SAMPLE *sndWrong = al_load_sample("Cave_Johnson_cave_laugh04.wav");
+    if(!sndWrong) {
+        cout << "sndWrong failed to load";
+        return -1;
+    }
+    ALLEGRO_SAMPLE *sndCorrect = al_load_sample("Cave_Johnson_yes.wav");
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
@@ -52,6 +60,11 @@ int main(int argc, char **argv)
     words.push_back("GUESS");
     words.push_back("HANGMAN");
     words.push_back("DIFFICULT");
+    words.push_back("APERTURE");
+    words.push_back("SCIENCE");
+    words.push_back("PORTAL");
+    words.push_back("TEST");
+    words.push_back("ASBESTOS");
 
     srand(time(0));
     random_shuffle(words.begin(), words.end());
@@ -96,7 +109,29 @@ int main(int argc, char **argv)
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			al_get_mouse_state(&state);
 			if((wrong == MAX_WRONG || won) && btnRestart.checkMouse(state) == 2){
-                return -1283912746147120;
+                words.clear();
+                words.push_back("GUESS");
+                words.push_back("HANGMAN");
+                words.push_back("DIFFICULT");
+                words.push_back("APERTURE");
+                words.push_back("SCIENCE");
+                words.push_back("PORTAL");
+                words.push_back("TEST");
+                words.push_back("ASBESTOS");
+                random_shuffle(words.begin(), words.end());
+                THE_WORD = words[0];            // word to guess
+                wrong = 0;
+                incorrect = 0;
+                correct = 0;                              // number of incorrect guesses
+                soFar = "";
+                soFar.resize(THE_WORD.size(), '-');         // word guessed so far
+                used = "";                            // letters already guessed
+                keyPressed = false;
+                key = 0;
+                printStuff = true;
+                won = false;
+                message = "";
+                title = true;
 			}
 			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2 && words.size() > 1){
                 //if(words.size() >= 1){
@@ -117,6 +152,9 @@ int main(int argc, char **argv)
 			if(soFar == THE_WORD && btnFinish.checkMouse(state) == 2 && words.size()== 1){
                 won = true;
 			}
+			if(btnQuit.checkMouse(state) == 2 && won != true){
+                won = true;
+			}
 		}
         if (event.type == ALLEGRO_EVENT_TIMER){
             redraw = true;
@@ -128,6 +166,12 @@ int main(int argc, char **argv)
             if(title){
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Hang Man!");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
+                             "You have to guess the correct word by guessing letters in it with your keyboard");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 60, ALLEGRO_ALIGN_CENTRE,
+                             "If you guess incorrectly too many times you will lose!");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 90, ALLEGRO_ALIGN_CENTRE,
+                             "The more words you guess completely the better you have done!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
 					"Press any key to continue or ESC to exit...");
@@ -135,7 +179,13 @@ int main(int argc, char **argv)
 					"Created by Drew Barrett");
             }else if(won){
                 al_get_mouse_state(&state);
-                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You win!");
+                if(soFar == THE_WORD){
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You win!");
+                }else{
+                    al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You lose!");
+                }
+                al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
+                              "You guessed %d words correctly. You missed %d words", correct, words.size());
                 btnRestart.draw(state);
             }else{
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -188,6 +238,7 @@ int main(int argc, char **argv)
                             used += guess;
                             if (THE_WORD.find(guess) != string::npos)
                             {
+                                al_play_sample(sndCorrect, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 cout << "That's right! " << guess << " is in the word.\n";
                                 message = "";
                                 message += "That's right! ";
@@ -203,6 +254,7 @@ int main(int argc, char **argv)
                             }
                             else
                             {
+                                al_play_sample(sndWrong, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 cout << "Sorry, " << guess << " isn't in the word.\n";
                                 //message = 'Sorry, ' + guess + 'isn\'t in the word.';
                                 message = "";
@@ -249,4 +301,7 @@ int init(){
     al_init_ttf_addon();
     al_install_mouse();
     al_install_keyboard();
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(1);
 }
