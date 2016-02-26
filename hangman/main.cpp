@@ -46,6 +46,8 @@ int main(int argc, char **argv)
         return -1;
     }
     ALLEGRO_SAMPLE *sndCorrect = al_load_sample("Cave_Johnson_yes.wav");
+    ALLEGRO_SAMPLE *sndStart = al_load_sample("Cave_Johnson_start.wav");
+    ALLEGRO_SAMPLE *sndCash = al_load_sample("Cave_Johnson_seventies_intro04.wav");
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
@@ -85,6 +87,7 @@ int main(int argc, char **argv)
     Button btnNext = Button(ScreenWidth/2, ScreenHeight - 100, "Next Word");
     Button btnFinish = Button(ScreenWidth/2, ScreenHeight - 100, "Finish Game");
     Button btnQuit = Button(ScreenWidth/2, ScreenHeight - 50, "Quit Early");
+    al_play_sample(sndStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
@@ -96,6 +99,8 @@ int main(int argc, char **argv)
             //cout << event.keyboard.keycode << endl;
             if(title){
                 title = false;
+                al_stop_samples();
+                al_play_sample(sndCash, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }else{
                 keyPressed = true;
                 key = event.keyboard.keycode;
@@ -105,6 +110,8 @@ int main(int argc, char **argv)
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
 			if(title){
                 title = false;
+                al_stop_samples();
+                al_play_sample(sndCash, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			}
 		}
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
