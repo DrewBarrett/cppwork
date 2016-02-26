@@ -20,6 +20,7 @@ using namespace std;
 #define ScreenWidth 1024
 #define ScreenHeight 768
 int init();
+void drawMan(int);
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
@@ -187,10 +188,12 @@ int main(int argc, char **argv)
                 al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
                               "You guessed %d words correctly. You missed %d words", correct, words.size());
                 btnRestart.draw(state);
+                drawMan(wrong);
             }else{
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
                 //if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 //{
+                drawMan(wrong);
                 if(printStuff){
                     cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
                     cout << "\nYou've used the following letters:\n" << used << endl;
@@ -276,6 +279,36 @@ int main(int argc, char **argv)
     }
     al_destroy_display(display);
     return 0;
+}
+
+void drawMan(int wrong){
+    if(wrong>=1){
+        al_draw_circle(ScreenWidth/2,(ScreenHeight/2) - 130, 30, al_color_name("white"), 2);
+        if(wrong>=2){
+            al_draw_line(ScreenWidth/2, (ScreenHeight/2)-100, ScreenWidth/2, ScreenHeight/2,al_color_name("white"),2);
+            if(wrong >= 3){
+                al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 50, (ScreenWidth/2) - 60, (ScreenHeight/2) - 70,al_color_name("white"),2);
+                if(wrong >= 4){
+                    al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 50, (ScreenWidth/2) + 60, (ScreenHeight/2) - 70,al_color_name("white"),2);
+                    if(wrong >= 5){
+                        al_draw_line(ScreenWidth/2, (ScreenHeight/2), (ScreenWidth/2) + 50, (ScreenHeight/2) + 80,al_color_name("white"),2);
+                        if(wrong >= 6){
+                            al_draw_line(ScreenWidth/2, (ScreenHeight/2), (ScreenWidth/2) - 50, (ScreenHeight/2) + 80,al_color_name("white"),2);
+                            if(wrong >= 7){
+                                al_draw_line(ScreenWidth/2+90, (ScreenHeight/2)-200, ScreenWidth/2+90, ScreenHeight/2 + 100,al_color_name("white"),2);
+                                al_draw_line(ScreenWidth/2+60, (ScreenHeight/2)+100, ScreenWidth/2+120, ScreenHeight/2 + 100,al_color_name("white"),2);
+                                if(wrong >= 8){
+                                    al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 160, ScreenWidth/2, ScreenHeight/2 -200,al_color_name("white"),2);
+                                    al_draw_line(ScreenWidth/2,ScreenHeight/2 -200, ScreenWidth/2+90, ScreenHeight/2 -200,al_color_name("white"),2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 int init(){
