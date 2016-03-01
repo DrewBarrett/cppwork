@@ -117,6 +117,7 @@ int main(int argc, char **argv)
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 			al_get_mouse_state(&state);
 			if((wrong == MAX_WRONG || won) && btnRestart.checkMouse(state) == 2){
+                al_play_sample(sndStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 words.clear();
                 words.push_back("GUESS");
                 words.push_back("HANGMAN");
