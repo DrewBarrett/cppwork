@@ -21,12 +21,14 @@ using namespace std;
 #define ScreenHeight 768
 int init();
 void drawMan(int);
+void personWalk();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 ALLEGRO_MOUSE_STATE state;
 ALLEGRO_BITMAP *bg;
-
+ALLEGRO_BITMAP *sprites;
+int spritex = 195;
 int main(int argc, char **argv)
 {
     init();
@@ -35,6 +37,7 @@ int main(int argc, char **argv)
         cout << "bg failed";
         return -1;
     }
+    sprites = al_load_bitmap("sprites.png");
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -202,6 +205,7 @@ int main(int argc, char **argv)
                 //if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 //{
                 drawMan(wrong);
+                personWalk();
                 if(printStuff){
                     cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
                     cout << "\nYou've used the following letters:\n" << used << endl;
@@ -317,6 +321,16 @@ void drawMan(int wrong){
         }
     }
 
+}
+
+void personWalk(){
+    if(spritex < 540){
+        spritex += 65;
+    }
+    else{
+        spritex = 195;
+    }
+    al_draw_bitmap_region(sprites, spritex, 0, -1*(194-134), 60, 500,500,0);
 }
 
 int init(){
