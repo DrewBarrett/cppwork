@@ -22,13 +22,19 @@ using namespace std;
 int init();
 void drawMan(int);
 void personWalk();
+void animateFirework();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 ALLEGRO_MOUSE_STATE state;
 ALLEGRO_BITMAP *bg;
 ALLEGRO_BITMAP *sprites;
-int spritex = 195;
+ALLEGRO_BITMAP *fireworks;
+int spritex = 200;
+int frameDelay = 2;
+int frameDelay2 = 2;
+int xpos = 250;
+int firey = 0;
 int main(int argc, char **argv)
 {
     init();
@@ -38,6 +44,7 @@ int main(int argc, char **argv)
         return -1;
     }
     sprites = al_load_bitmap("sprites.png");
+    fireworks = al_load_bitmap("fireworks.png");
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -172,6 +179,7 @@ int main(int argc, char **argv)
             redraw = true;
         }
         if (redraw && al_is_event_queue_empty(queue)) {
+            redraw = false;
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
             al_draw_bitmap(bg,0,0,0);
@@ -206,6 +214,7 @@ int main(int argc, char **argv)
                 //{
                 drawMan(wrong);
                 personWalk();
+
                 if(printStuff){
                     cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
                     cout << "\nYou've used the following letters:\n" << used << endl;
@@ -235,7 +244,7 @@ int main(int argc, char **argv)
                     cout << "\nYou guessed it!";
                     message = "";
                     message = "You guessed it! The word was " + THE_WORD;
-
+                    animateFirework();
                     if(words.size()>1){
                         btnNext.draw(state);
                     }else{
@@ -324,13 +333,43 @@ void drawMan(int wrong){
 }
 
 void personWalk(){
-    if(spritex < 540){
-        spritex += 65;
+    if(frameDelay > 0){
+        frameDelay--;
+    }else{
+        frameDelay = 3;
+        if(spritex < 500){
+            spritex += 50;
+        }
+        else{
+            spritex = 200;
+        }
     }
-    else{
-        spritex = 195;
+    xpos+=2;
+    if(xpos > 790){
+        xpos = 300;
     }
-    al_draw_bitmap_region(sprites, spritex, 0, -1*(194-134), 60, 500,500,0);
+
+    al_draw_bitmap_region(sprites, 0, 60, 90/2, 145, 250,500,0);
+    al_draw_bitmap_region(sprites, 90/2, 60, 90, 145, 750,500,0);
+    al_draw_bitmap_region(sprites, spritex, 0, -50, 60, xpos,500,0);
+}
+
+void animateFirework(){
+    if(frameDelay2 > 0){
+        frameDelay2--;
+    }else{
+        frameDelay2 = 4;
+        if(firey<580){
+            firey+=128;
+        }else{
+            firey = 0;
+        }
+    }
+
+    //firey+=128;
+    al_draw_bitmap_region(fireworks,0,firey,128,128,(ScreenWidth/2)-128/2,(ScreenHeight/2)-250,0);
+    al_draw_bitmap_region(fireworks,128,firey,128,128,(ScreenWidth/2)+128,(ScreenHeight/2)-250,0);
+    al_draw_bitmap_region(fireworks,128*2,firey,128,128,(ScreenWidth/2)-128*2,(ScreenHeight/2)-250,0);
 }
 
 int init(){
