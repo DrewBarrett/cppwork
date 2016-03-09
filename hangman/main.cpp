@@ -58,6 +58,8 @@ int main(int argc, char **argv)
     ALLEGRO_SAMPLE *sndCorrect = al_load_sample("Cave_Johnson_yes.wav");
     ALLEGRO_SAMPLE *sndStart = al_load_sample("Cave_Johnson_start.wav");
     ALLEGRO_SAMPLE *sndCash = al_load_sample("Cave_Johnson_seventies_intro04.wav");
+    ALLEGRO_SAMPLE *sndAsbestosStart = al_load_sample("Cave_Johnson_misc_tests08.wav");
+    ALLEGRO_SAMPLE *sndAsbestosEnd = al_load_sample("Cave_Johnson_misc_tests10.wav");
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
@@ -78,9 +80,9 @@ int main(int argc, char **argv)
     words.push_back("PORTAL");
     words.push_back("TEST");
     words.push_back("ASBESTOS");
-
     srand(time(0));
     random_shuffle(words.begin(), words.end());
+    words.insert(words.begin() + 1, "ASBESTOS");
     string THE_WORD = words[0];            // word to guess
     int wrong = 0;
     int incorrect = 0;
@@ -136,8 +138,9 @@ int main(int argc, char **argv)
                 words.push_back("SCIENCE");
                 words.push_back("PORTAL");
                 words.push_back("TEST");
-                words.push_back("ASBESTOS");
+                //words.push_back("ASBESTOS");
                 random_shuffle(words.begin(), words.end());
+                words.insert(words.begin() + 1, "ASBESTOS");
                 THE_WORD = words[0];            // word to guess
                 wrong = 0;
                 incorrect = 0;
@@ -153,6 +156,10 @@ int main(int argc, char **argv)
                 title = true;
 			}
 			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2 && words.size() > 1){
+                if(THE_WORD == "ASBESTOS"){
+                    al_stop_samples();
+                    al_play_sample(sndAsbestosEnd, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                }
                 //if(words.size() >= 1){
                 words.erase(words.begin());
                 //}
@@ -166,6 +173,10 @@ int main(int argc, char **argv)
                     printStuff = true;
                     keyPressed = false;
                     correct++;
+                }
+                if(THE_WORD == "ASBESTOS"){
+                    al_stop_samples();
+                    al_play_sample(sndAsbestosStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
 			}
 			if(soFar == THE_WORD && btnFinish.checkMouse(state) == 2 && words.size()== 1){
