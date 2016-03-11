@@ -73,6 +73,7 @@ int main(int argc, char **argv)
             roundwin = false;
         }
         if (event.type == ALLEGRO_EVENT_KEY_UP) {
+            std::cout << "key up" << std::endl;
             if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
                 down = false;
             }

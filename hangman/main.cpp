@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 {
     init();
     bg = al_load_bitmap("bg.png");
-    if(!bg){
+    if(!bg) {
         cout << "bg failed";
         return -1;
     }
@@ -63,12 +63,12 @@ int main(int argc, char **argv)
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
-	timer = al_create_timer(1.0 / 60);
+    timer = al_create_timer(1.0 / 60);
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_start_timer(timer);
     bool redraw = true;
     bool title = true;
-     // set-up
+    // set-up
     const int MAX_WRONG = 8;  // maximum number of incorrect guesses allowed
 
     vector<string> words;  // collection of possible words to guess
@@ -95,10 +95,10 @@ int main(int argc, char **argv)
     bool won = false;
     string message = "";
     cout << "Welcome to Hangman.  Good luck!\n";
-    Button btnRestart = Button(ScreenWidth/2, ScreenHeight - 100, "Restart");
-    Button btnNext = Button(ScreenWidth/2, ScreenHeight - 100, "Next Word");
-    Button btnFinish = Button(ScreenWidth/2, ScreenHeight - 100, "Finish Game");
-    Button btnQuit = Button(ScreenWidth/2, ScreenHeight - 50, "Quit Early");
+    Button btnRestart = Button(ScreenWidth / 2, ScreenHeight - 100, "Restart");
+    Button btnNext = Button(ScreenWidth / 2, ScreenHeight - 100, "Next Word");
+    Button btnFinish = Button(ScreenWidth / 2, ScreenHeight - 100, "Finish Game");
+    Button btnQuit = Button(ScreenWidth / 2, ScreenHeight - 50, "Quit Early");
     al_play_sample(sndStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     while (1) {
         ALLEGRO_EVENT event;
@@ -109,26 +109,26 @@ int main(int argc, char **argv)
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 break;
             //cout << event.keyboard.keycode << endl;
-            if(title){
+            if(title) {
                 title = false;
                 al_stop_samples();
                 al_play_sample(sndCash, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-            }else{
+            } else {
                 keyPressed = true;
                 key = event.keyboard.keycode;
                 cout << al_keycode_to_name(event.keyboard.keycode) << endl;
             }
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if(title){
+            if(title) {
                 title = false;
                 al_stop_samples();
                 al_play_sample(sndCash, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-			}
-		}
-		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-			al_get_mouse_state(&state);
-			if((wrong == MAX_WRONG || won) && btnRestart.checkMouse(state) == 2){
+            }
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+            al_get_mouse_state(&state);
+            if((wrong == MAX_WRONG || won) && btnRestart.checkMouse(state) == 2) {
                 al_play_sample(sndStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 words.clear();
                 words.push_back("GUESS");
@@ -154,16 +154,16 @@ int main(int argc, char **argv)
                 won = false;
                 message = "";
                 title = true;
-			}
-			if(soFar == THE_WORD && btnNext.checkMouse(state) == 2 && words.size() > 1){
-                if(THE_WORD == "ASBESTOS"){
+            }
+            if(soFar == THE_WORD && btnNext.checkMouse(state) == 2 && words.size() > 1) {
+                if(THE_WORD == "ASBESTOS") {
                     al_stop_samples();
                     al_play_sample(sndAsbestosEnd, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
                 //if(words.size() >= 1){
                 words.erase(words.begin());
                 //}
-                if(words.size() > 0){
+                if(words.size() > 0) {
                     THE_WORD = words[0];
                     soFar = "";
                     soFar.resize(THE_WORD.size(), '-');
@@ -174,27 +174,27 @@ int main(int argc, char **argv)
                     keyPressed = false;
                     correct++;
                 }
-                if(THE_WORD == "ASBESTOS"){
+                if(THE_WORD == "ASBESTOS") {
                     al_stop_samples();
                     al_play_sample(sndAsbestosStart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
-			}
-			if(soFar == THE_WORD && btnFinish.checkMouse(state) == 2 && words.size()== 1){
+            }
+            if(soFar == THE_WORD && btnFinish.checkMouse(state) == 2 && words.size() == 1) {
                 won = true;
-			}
-			if(btnQuit.checkMouse(state) == 2 && won != true){
+            }
+            if(btnQuit.checkMouse(state) == 2 && won != true) {
                 won = true;
-			}
-		}
-        if (event.type == ALLEGRO_EVENT_TIMER){
+            }
+        }
+        if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
         }
         if (redraw && al_is_event_queue_empty(queue)) {
             redraw = false;
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_bitmap(bg,0,0,0);
-            if(title){
+            al_draw_bitmap(bg, 0, 0, 0);
+            if(title) {
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Hang Man!");
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
@@ -204,29 +204,29 @@ int main(int argc, char **argv)
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 90, ALLEGRO_ALIGN_CENTRE,
                              "The more words you guess completely the better you have done!");
                 //al_draw_bitmap(rules, (ScreenWidth / 2) - (al_get_bitmap_width(rules)/2) , 100, 0);
-				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
-					"Press any key to continue or ESC to exit...");
-				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
-					"Created by Drew Barrett");
-            }else if(won){
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 150, ALLEGRO_ALIGN_CENTRE,
+                             "Press any key to continue or ESC to exit...");
+                al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
+                             "Created by Drew Barrett");
+            } else if(won) {
                 al_get_mouse_state(&state);
-                if(soFar == THE_WORD){
+                if(soFar == THE_WORD) {
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You win!");
-                }else{
+                } else {
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "You lose!");
                 }
                 al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 30, ALLEGRO_ALIGN_CENTRE,
                               "You guessed %d words correctly. You missed %d words", correct, words.size());
                 btnRestart.draw(state);
                 drawMan(wrong);
-            }else{
+            } else {
                 //al_clear_to_color(al_map_rgb(0, 0, 0));
                 //if ((wrong < MAX_WRONG) && (soFar != THE_WORD))
                 //{
                 drawMan(wrong);
                 personWalk();
 
-                if(printStuff){
+                if(printStuff) {
                     cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
                     cout << "\nYou've used the following letters:\n" << used << endl;
                     cout << "\nSo far, the word is:\n" << soFar << endl;
@@ -240,39 +240,38 @@ int main(int argc, char **argv)
                 al_draw_textf(font, al_color_name("white"), ScreenWidth / 2, 90, ALLEGRO_ALIGN_CENTRE,
                               "So far, the word is: %s", soFar.c_str());
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 120, ALLEGRO_ALIGN_CENTRE,
-                              message.c_str());
+                             message.c_str());
                 printStuff = false;
                 char guess;
                 //cout << "\n\nEnter your guess: ";
                 al_get_mouse_state(&state);
                 btnQuit.draw(state);
-                if (wrong == MAX_WRONG){
+                if (wrong == MAX_WRONG) {
                     cout << "\nYou've been hanged!";
                     message = "";
                     message = "You've been hanged! The word was " + THE_WORD;
                     btnRestart.draw(state);
-                }else if(soFar == THE_WORD){
+                } else if(soFar == THE_WORD) {
                     cout << "\nYou guessed it!";
                     message = "";
                     message = "You guessed it! The word was " + THE_WORD;
                     animateFirework();
-                    if(words.size()>1){
+                    if(words.size() > 1) {
                         btnNext.draw(state);
-                    }else{
+                    } else {
                         btnFinish.draw(state);
                     }
-                }else{
+                } else {
                     al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 150, ALLEGRO_ALIGN_CENTRE, "Type your guess!");
                     //cin >> guess;keyPressed = false;
-                    if(keyPressed){
+                    if(keyPressed) {
                         printStuff = true;
                         string keyName = al_keycode_to_name(key);
                         guess = keyName[0];
                         keyPressed = false;
-                        if(used.find(guess) == string::npos){
+                        if(used.find(guess) == string::npos) {
                             used += guess;
-                            if (THE_WORD.find(guess) != string::npos)
-                            {
+                            if (THE_WORD.find(guess) != string::npos) {
                                 al_play_sample(sndCorrect, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 cout << "That's right! " << guess << " is in the word.\n";
                                 message = "";
@@ -286,9 +285,7 @@ int main(int argc, char **argv)
                                 for (int i = 0; i < THE_WORD.length(); ++i)
                                     if (THE_WORD[i] == guess)
                                         soFar[i] = guess;
-                            }
-                            else
-                            {
+                            } else {
                                 al_play_sample(sndWrong, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 cout << "Sorry, " << guess << " isn't in the word.\n";
                                 //message = 'Sorry, ' + guess + 'isn\'t in the word.';
@@ -313,25 +310,26 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void drawMan(int wrong){
-    if(wrong>=1){
-        al_draw_circle(ScreenWidth/2,(ScreenHeight/2) - 130, 30, al_color_name("white"), 2);
-        if(wrong>=2){
-            al_draw_line(ScreenWidth/2, (ScreenHeight/2)-100, ScreenWidth/2, ScreenHeight/2,al_color_name("white"),2);
-            if(wrong >= 3){
-                al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 50, (ScreenWidth/2) - 60, (ScreenHeight/2) - 70,al_color_name("white"),2);
-                if(wrong >= 4){
-                    al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 50, (ScreenWidth/2) + 60, (ScreenHeight/2) - 70,al_color_name("white"),2);
-                    if(wrong >= 5){
-                        al_draw_line(ScreenWidth/2, (ScreenHeight/2), (ScreenWidth/2) + 50, (ScreenHeight/2) + 80,al_color_name("white"),2);
-                        if(wrong >= 6){
-                            al_draw_line(ScreenWidth/2, (ScreenHeight/2), (ScreenWidth/2) - 50, (ScreenHeight/2) + 80,al_color_name("white"),2);
-                            if(wrong >= 7){
-                                al_draw_line(ScreenWidth/2+90, (ScreenHeight/2)-200, ScreenWidth/2+90, ScreenHeight/2 + 100,al_color_name("white"),2);
-                                al_draw_line(ScreenWidth/2+60, (ScreenHeight/2)+100, ScreenWidth/2+120, ScreenHeight/2 + 100,al_color_name("white"),2);
-                                if(wrong >= 8){
-                                    al_draw_line(ScreenWidth/2, (ScreenHeight/2) - 160, ScreenWidth/2, ScreenHeight/2 -200,al_color_name("white"),2);
-                                    al_draw_line(ScreenWidth/2,ScreenHeight/2 -200, ScreenWidth/2+90, ScreenHeight/2 -200,al_color_name("white"),2);
+void drawMan(int wrong)
+{
+    if(wrong >= 1) {
+        al_draw_circle(ScreenWidth / 2, (ScreenHeight / 2) - 130, 30, al_color_name("white"), 2);
+        if(wrong >= 2) {
+            al_draw_line(ScreenWidth / 2, (ScreenHeight / 2) - 100, ScreenWidth / 2, ScreenHeight / 2, al_color_name("white"), 2);
+            if(wrong >= 3) {
+                al_draw_line(ScreenWidth / 2, (ScreenHeight / 2) - 50, (ScreenWidth / 2) - 60, (ScreenHeight / 2) - 70, al_color_name("white"), 2);
+                if(wrong >= 4) {
+                    al_draw_line(ScreenWidth / 2, (ScreenHeight / 2) - 50, (ScreenWidth / 2) + 60, (ScreenHeight / 2) - 70, al_color_name("white"), 2);
+                    if(wrong >= 5) {
+                        al_draw_line(ScreenWidth / 2, (ScreenHeight / 2), (ScreenWidth / 2) + 50, (ScreenHeight / 2) + 80, al_color_name("white"), 2);
+                        if(wrong >= 6) {
+                            al_draw_line(ScreenWidth / 2, (ScreenHeight / 2), (ScreenWidth / 2) - 50, (ScreenHeight / 2) + 80, al_color_name("white"), 2);
+                            if(wrong >= 7) {
+                                al_draw_line(ScreenWidth / 2 + 90, (ScreenHeight / 2) - 200, ScreenWidth / 2 + 90, ScreenHeight / 2 + 100, al_color_name("white"), 2);
+                                al_draw_line(ScreenWidth / 2 + 60, (ScreenHeight / 2) + 100, ScreenWidth / 2 + 120, ScreenHeight / 2 + 100, al_color_name("white"), 2);
+                                if(wrong >= 8) {
+                                    al_draw_line(ScreenWidth / 2, (ScreenHeight / 2) - 160, ScreenWidth / 2, ScreenHeight / 2 - 200, al_color_name("white"), 2);
+                                    al_draw_line(ScreenWidth / 2, ScreenHeight / 2 - 200, ScreenWidth / 2 + 90, ScreenHeight / 2 - 200, al_color_name("white"), 2);
                                 }
                             }
                         }
@@ -343,62 +341,62 @@ void drawMan(int wrong){
 
 }
 
-void personWalk(){
-    if(frameDelay > 0){
+void personWalk()
+{
+    if(frameDelay > 0) {
         frameDelay--;
-    }else{
+    } else {
         frameDelay = 3;
-        if(spritex < 500){
+        if(spritex < 500) {
             spritex += 50;
-        }
-        else{
+        } else {
             spritex = 200;
         }
     }
-    xpos+=2;
-    if(xpos > 790){
+    xpos += 2;
+    if(xpos > 790) {
         xpos = 300;
     }
 
-    al_draw_bitmap_region(sprites, 0, 60, 90/2, 145, 250,500,0);
-    al_draw_bitmap_region(sprites, 90/2, 60, 90, 145, 750,500,0);
-    al_draw_bitmap_region(sprites, spritex, 0, -50, 60, xpos,500,0);
+    al_draw_bitmap_region(sprites, 0, 60, 90 / 2, 145, 250, 500, 0);
+    al_draw_bitmap_region(sprites, 90 / 2, 60, 90, 145, 750, 500, 0);
+    al_draw_bitmap_region(sprites, spritex, 0, -50, 60, xpos, 500, 0);
 }
 
-void animateFirework(){
-    if(frameDelay2 > 0){
+void animateFirework()
+{
+    if(frameDelay2 > 0) {
         frameDelay2--;
-    }else{
+    } else {
         frameDelay2 = 4;
-        if(firey<580){
-            firey+=128;
-        }else{
+        if(firey < 580) {
+            firey += 128;
+        } else {
             firey = 0;
         }
     }
 
     //firey+=128;
-    al_draw_bitmap_region(fireworks,0,firey,128,128,(ScreenWidth/2)-128/2,(ScreenHeight/2)-250,0);
-    al_draw_bitmap_region(fireworks,128,firey,128,128,(ScreenWidth/2)+128,(ScreenHeight/2)-250,0);
-    al_draw_bitmap_region(fireworks,128*2,firey,128,128,(ScreenWidth/2)-128*2,(ScreenHeight/2)-250,0);
+    al_draw_bitmap_region(fireworks, 0, firey, 128, 128, (ScreenWidth / 2) - 128 / 2, (ScreenHeight / 2) - 250, 0);
+    al_draw_bitmap_region(fireworks, 128, firey, 128, 128, (ScreenWidth / 2) + 128, (ScreenHeight / 2) - 250, 0);
+    al_draw_bitmap_region(fireworks, 128 * 2, firey, 128, 128, (ScreenWidth / 2) - 128 * 2, (ScreenHeight / 2) - 250, 0);
 }
 
-int init(){
+int init()
+{
 
-    if(!al_init())
-    {
+    if(!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
         return -1;
     }
     display = al_create_display(ScreenWidth, ScreenHeight);
-    if(!display)
-    {
+    if(!display) {
         fprintf(stderr, "failed to create display!\n");
         return -1;
     }
-    al_clear_to_color(al_map_rgb(0,0,0));
+    al_clear_to_color(al_map_rgb(0, 0, 0));
     al_init_image_addon();
-    if(!al_init_primitives_addon()){
+    if(!al_init_primitives_addon()) {
         fprintf(stderr, "failed to initialize primitives!\n");
         return -1;
     }
