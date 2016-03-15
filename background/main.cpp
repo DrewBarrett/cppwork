@@ -116,7 +116,7 @@ int main(int argc, char **argv)
                 if(up && cy >= 132){
                     cy-=2;
                 }
-                if(down && cy <= 622){
+                if(down && (cy <= 622 || (cx < ScreenWidth/2 + 50 && cx > ScreenWidth/2 - 50))){
                     cy+=2;
                 }
                 al_draw_filled_circle(cx, cy, cr, al_color_name("white"));
