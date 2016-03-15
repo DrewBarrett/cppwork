@@ -15,10 +15,12 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 ALLEGRO_MOUSE_STATE state;
+ALLEGRO_BITMAP *bg;
 
 int main(int argc, char **argv)
 {
     init();
+    bg = al_load_bitmap("bg.png");
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -32,8 +34,8 @@ int main(int argc, char **argv)
     al_start_timer(timer);
     bool redraw = true;
     bool title = false;
-    int cx = 50;
-    int cy = 50;
+    int cx = ScreenWidth/2;
+    int cy = ScreenHeight/2;
     int cr = 20;
     bool right = false;
     bool left = false;
@@ -42,11 +44,13 @@ int main(int argc, char **argv)
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
             break;
+        }
         if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE){
                 break;
+            }
             if (event.keyboard.keycode == ALLEGRO_KEY_D){
                 right = true;
             }
@@ -60,8 +64,10 @@ int main(int argc, char **argv)
                 down = true;
             }
         }
-        if (event.type = ALLEGRO_EVENT_KEY_UP){
+        if (event.type == ALLEGRO_EVENT_KEY_UP){
             std::cout << "key up" << std::endl;
+            std::cout << al_keycode_to_name(event.keyboard.keycode) << std::endl;
+            std::cout << cx << ", " << cy << std::endl;
             if (event.keyboard.keycode == ALLEGRO_KEY_D){
                 right = false;
             }
@@ -91,6 +97,7 @@ int main(int argc, char **argv)
             redraw = false;
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
+            al_draw_bitmap(bg,0,0,0);
             if(title){
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Solitaire!");
@@ -100,16 +107,16 @@ int main(int argc, char **argv)
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
             }else{
-                if(right){
+                if(right && cx <= 860){
                     cx+=2;
                 }
-                if(left){
+                if(left && cx >= 132){
                     cx-=2;
                 }
-                if(up){
+                if(up && cy >= 132){
                     cy-=2;
                 }
-                if(down){
+                if(down && cy <= 622){
                     cy+=2;
                 }
                 al_draw_filled_circle(cx, cy, cr, al_color_name("white"));
