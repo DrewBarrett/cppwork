@@ -11,6 +11,7 @@
 #define ScreenWidth 1024
 #define ScreenHeight 768
 int init();
+bool checkForWall(int, int, int, int);
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
@@ -107,16 +108,22 @@ int main(int argc, char **argv)
 				al_draw_text(font, al_color_name("white"), ScreenWidth / 2, ScreenHeight - 100, ALLEGRO_ALIGN_CENTRE,
 					"Created by Drew Barrett");
             }else{
-                if(right && cx <= 860){
-                    cx+=2;
+                if(right){
+                    if(!checkForWall(cx+cr,cy-cr,cx+cr,cy+cr)){
+                        cx+=2;
+                    }
                 }
-                if(left && cx >= 132){
-                    cx-=2;
+                if(left){
+                    if(!checkForWall(cx-cr,cy-cr,cx-cr,cy+cr)){
+                        cx-=2;
+                    }
                 }
-                if(up && cy >= 132){
-                    cy-=2;
+                if(up){
+                    if(!checkForWall(cx-cr,cy-cr,cx+cr,cy-cr)){
+                        cy-=2;
+                    }
                 }
-                if(down && (cy <= 622 || (cx < ScreenWidth/2 + 50 && cx > ScreenWidth/2 - 50))){
+                if(down){
                     cy+=2;
                 }
                 al_draw_filled_circle(cx, cy, cr, al_color_name("white"));
@@ -126,6 +133,28 @@ int main(int argc, char **argv)
     }
     al_destroy_display(display);
     return 0;
+}
+
+bool checkForWall(int startx, int starty, int stopx, int stopy){
+    if(startx == stopx){
+        for(int i = starty; i < stopy; i+= stopy-starty-1){
+            ALLEGRO_COLOR pixel = al_get_pixel(bg, startx, i);
+            //std::cout << pixel.r << pixel.b << pixel.g;
+            if(pixel.r == al_color_name("white").r && pixel.g == al_color_name("white").g && pixel.b == al_color_name("white").b){
+                return true;
+            }
+        }
+    }
+    if(starty == stopy){
+        for(int i = startx; i < stopx; i+= stopx-startx-1){
+            ALLEGRO_COLOR pixel = al_get_pixel(bg, i, starty);
+            //std::cout << pixel.r << pixel.b << pixel.g;
+            if(pixel.r == al_color_name("white").r && pixel.g == al_color_name("white").g && pixel.b == al_color_name("white").b){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 int init(){
