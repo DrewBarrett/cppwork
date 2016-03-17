@@ -16,12 +16,18 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_TIMER *timer;
 ALLEGRO_MOUSE_STATE state;
-ALLEGRO_BITMAP *bg;
+ALLEGRO_BITMAP *bg0;
+ALLEGRO_BITMAP *currentBG;
+ALLEGRO_BITMAP *bg1;
+ALLEGRO_BITMAP *bg2;
 
 int main(int argc, char **argv)
 {
     init();
-    bg = al_load_bitmap("bg.png");
+    bg0 = al_load_bitmap("bg.png");
+    bg1 = al_load_bitmap("bg1.png");
+    bg2 = al_load_bitmap("bg2.png");
+    currentBG = bg0;
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'comic.ttf'.\n");
@@ -98,7 +104,7 @@ int main(int argc, char **argv)
             redraw = false;
             al_set_target_bitmap(al_get_backbuffer(display));
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_bitmap(bg,0,0,0);
+            al_draw_bitmap(currentBG,0,0,0);
             if(title){
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(font, al_color_name("white"), ScreenWidth / 2, 0, ALLEGRO_ALIGN_CENTRE, "Solitaire!");
@@ -112,10 +118,28 @@ int main(int argc, char **argv)
                     if(!checkForWall(cx+cr,cy-cr,cx+cr,cy+cr)){
                         cx+=2;
                     }
+                    if(cx > ScreenWidth){
+                        cx = 0 + (cr * 2) + 1;
+                        if(currentBG == bg1){
+                            currentBG = bg0;
+                        }
+                        else if(currentBG == bg0){
+                            currentBG = bg2;//fountain
+                        }
+                    }
                 }
                 if(left){
                     if(!checkForWall(cx-cr,cy-cr,cx-cr,cy+cr)){
                         cx-=2;
+                    }
+                    if(cx < 0){
+                        cx = ScreenWidth - (cr * 2) + 1;
+                        if(currentBG == bg0){
+                            currentBG = bg1;
+                        }
+                        else if(currentBG == bg2){
+                            currentBG = bg0;
+                        }
                     }
                 }
                 if(up){
@@ -124,7 +148,9 @@ int main(int argc, char **argv)
                     }
                 }
                 if(down){
-                    cy+=2;
+                    if(!checkForWall(cx-cr,cy+cr,cx+cr,cy+cr)){
+                        cy+=2;
+                    }
                 }
                 al_draw_filled_circle(cx, cy, cr, al_color_name("white"));
             }
@@ -137,8 +163,8 @@ int main(int argc, char **argv)
 
 bool checkForWall(int startx, int starty, int stopx, int stopy){
     if(startx == stopx){
-        for(int i = starty; i < stopy; i+= stopy-starty-1){
-            ALLEGRO_COLOR pixel = al_get_pixel(bg, startx, i);
+        for(int i = starty; i < stopy; i+= (stopy-starty-1)/2){
+            ALLEGRO_COLOR pixel = al_get_pixel(currentBG, startx, i);
             //std::cout << pixel.r << pixel.b << pixel.g;
             if(pixel.r == al_color_name("white").r && pixel.g == al_color_name("white").g && pixel.b == al_color_name("white").b){
                 return true;
@@ -146,8 +172,8 @@ bool checkForWall(int startx, int starty, int stopx, int stopy){
         }
     }
     if(starty == stopy){
-        for(int i = startx; i < stopx; i+= stopx-startx-1){
-            ALLEGRO_COLOR pixel = al_get_pixel(bg, i, starty);
+        for(int i = startx; i < stopx; i+= (stopx-startx-1)/2){
+            ALLEGRO_COLOR pixel = al_get_pixel(currentBG, i, starty);
             //std::cout << pixel.r << pixel.b << pixel.g;
             if(pixel.r == al_color_name("white").r && pixel.g == al_color_name("white").g && pixel.b == al_color_name("white").b){
                 return true;
