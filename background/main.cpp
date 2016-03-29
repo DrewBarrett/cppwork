@@ -20,6 +20,7 @@ ALLEGRO_BITMAP *bg0;
 ALLEGRO_BITMAP *currentBG;
 ALLEGRO_BITMAP *bg1;
 ALLEGRO_BITMAP *bg2;
+ALLEGRO_BITMAP *bg3;
 
 int main(int argc, char **argv)
 {
@@ -27,6 +28,7 @@ int main(int argc, char **argv)
     bg0 = al_load_bitmap("bg.png");
     bg1 = al_load_bitmap("bg1.png");
     bg2 = al_load_bitmap("bg2.png");
+    bg3 = al_load_bitmap("bg3.png");
     currentBG = bg0;
     ALLEGRO_FONT *font = al_load_font("comic.ttf", 20, 0);
     if (!font) {
@@ -146,10 +148,22 @@ int main(int argc, char **argv)
                     if(!checkForWall(cx-cr,cy-cr,cx+cr,cy-cr)){
                         cy-=2;
                     }
+                    if(cy < 0){
+                        cy = ScreenHeight - (cr * 2) + 1;
+                        if(currentBG == bg0){
+                            currentBG = bg3;
+                        }
+                    }
                 }
                 if(down){
                     if(!checkForWall(cx-cr,cy+cr,cx+cr,cy+cr)){
                         cy+=2;
+                    }
+                    if(cy > ScreenHeight){
+                        cy = (cr * 2) + 1;
+                        if(currentBG == bg3){
+                            currentBG = bg0;
+                        }
                     }
                 }
                 al_draw_filled_circle(cx, cy, cr, al_color_name("white"));
